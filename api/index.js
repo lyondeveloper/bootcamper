@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const connectDb = require('./config/db');
 
+const errorHandler = require('./middleware/error');
+
 const app = express();
 
 // Body parse
@@ -22,6 +24,9 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+
+// Error middleware handler
+app.use(errorHandler);
 
 // Connect to db
 connectDb();
