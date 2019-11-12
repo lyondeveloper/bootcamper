@@ -1,18 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import {
-  Container,
-  CardGroup,
-  Card,
-  CardBody,
-  CardTitle,
-  CardText,
-  Form,
-  FormFeedback,
-  Row,
-  Col,
-  FormGroup
-} from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
+
+import { initialState } from './showcase.model';
+
+import { FormInput } from '../commons/form/input.component';
 
 import {
   ShowcaseContainer,
@@ -21,6 +13,28 @@ import {
 } from './showcase.styles';
 
 const ShowCase = () => {
+  const [state, setState] = useState({ ...initialState });
+
+  const { formPayload, validationRules } = state;
+
+  const handleChange = ({ target: { name, value } }) =>
+    setState({ ...state, [name]: value });
+
+  const isValid = () => {
+    const keys = Object.keys(formPayload);
+
+    keys.forEach(key => {
+      if (formPayload[key] === '') {
+        validationRules[key] = false;
+      } else {
+        validationRules[key] = true;
+      }
+    });
+    debugger;
+  };
+
+  isValid();
+
   return (
     <ShowcaseContainer imageUrl='../../static/img/showcase.jpg'>
       <DarkOverlay>
