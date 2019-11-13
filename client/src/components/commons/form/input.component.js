@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
-import { Input, FormGroup, FormFeedback, InputGroup, Label } from 'reactstrap';
+import { Input, FormGroup, FormFeedback, Label } from 'reactstrap';
 
 const FormInput = ({
   name,
@@ -17,18 +17,32 @@ const FormInput = ({
 }) => {
   return (
     <FormGroup>
-      <Label for={name}>{labelText}</Label>
-      <Input
-        name={name}
-        type={type}
-        className={className}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        invalid={required && !isValid}
-      />
-      <FormFeedback> </FormFeedback>
+      {labelText.length > 0 ? (
+        <Fragment>
+          <Label for={name}>{labelText}</Label>
+          <Input
+            name={name}
+            type={type}
+            className={className}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            invalid={required && !isValid && value.length < 1}
+          />
+        </Fragment>
+      ) : (
+        <Input
+          name={name}
+          type={type}
+          className={className}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+          invalid={required && !isValid && value.length < 1}
+        />
+      )}
+      <FormFeedback> {errorText} </FormFeedback>
     </FormGroup>
   );
 };
@@ -58,4 +72,4 @@ FormInput.defaultProps = {
   onBlur: () => {}
 };
 
-export default FormInput;
+export default memo(FormInput);

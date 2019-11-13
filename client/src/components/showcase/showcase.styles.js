@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 
 export const ShowcaseContainer = styled.div`
-  width: 100%;
   position: relative;
+  background: ${({ imageUrl }) => `url(${imageUrl})`} no-repeat center
+    center/cover;
   min-height: 100vh;
   color: #fff;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: ${({ imageUrl }) => `url(${imageUrl})`};
 `;
 
 export const ShowcaseInner = styled.div`
