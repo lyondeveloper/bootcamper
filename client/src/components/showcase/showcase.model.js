@@ -5,7 +5,7 @@ export const initialValidationRules = {
 
 export const initialFormPayload = {
   milesFrom: '',
-  zipcode: 0
+  zipcode: ''
 };
 
 export const initialState = {

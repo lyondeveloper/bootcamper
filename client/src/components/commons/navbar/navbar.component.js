@@ -31,20 +31,20 @@ const Header = () => {
         <Container>
           <NavbarBrand href='/'>
             {' '}
-            <i class='fas fa-laptop-code'></i> DevCamper{' '}
+            <i className='fas fa-laptop-code'></i> DevCamper{' '}
           </NavbarBrand>
           <NavbarToggler onClick={toggleCollapsable} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className='ml-auto' navbar>
               <NavItem>
                 <NavLink href='/auth/login'>
-                  <i class='fas fa-sign-in-alt'></i> Login
+                  <i className='fas fa-sign-in-alt'></i> Login
                 </NavLink>
               </NavItem>
 
               <NavItem>
                 <NavLink href='/auth/register'>
-                  <i class='fas fa-user-plus'></i> Register
+                  <i className='fas fa-user-plus'></i> Register
                 </NavLink>
               </NavItem>
 
