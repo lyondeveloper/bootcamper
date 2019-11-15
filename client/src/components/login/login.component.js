@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Form, Container, Row, Col, Card, CardBody, Button } from "reactstrap";
+import { Form, Container, Row, Col, Card, CardBody, Button } from 'reactstrap';
 
-import FormInput from "../commons/form/input.component";
+import FormInput from '../commons/form/input.component';
 
-import { initialState } from "./login.model";
+import { initialState } from './login.model';
 
 const Login = () => {
   const [state, setState] = useState({ ...initialState });
@@ -24,7 +25,7 @@ const Login = () => {
     // validation rules, then returning true or false depending
     // on the result
     keys.forEach(key => {
-      if (formPayload[key] === "" || formPayload[key] === 0) {
+      if (formPayload[key] === '' || formPayload[key] === 0) {
         validationRules[key] = false;
         next = false;
       } else {
@@ -45,15 +46,15 @@ const Login = () => {
   };
 
   return (
-    <section className="form mt-5">
+    <section className='form mt-5'>
       <Container>
         <Row>
-          <Col md={6} className="m-auto">
-            <Card color="white" className="p-4 mb-4">
+          <Col md={6} className='m-auto'>
+            <Card color='white' className='p-4 mb-4'>
               <CardBody>
                 <h1>
-                  {" "}
-                  <i class="fas fa-sign-in-alt"></i> Login
+                  {' '}
+                  <i class='fas fa-sign-in-alt'></i> Login
                 </h1>
                 <p>
                   Log in to list your bootcamp or rate, review and favorite
@@ -61,30 +62,36 @@ const Login = () => {
                 </p>
                 <Form>
                   <FormInput
-                    name="email"
+                    name='email'
                     value={email}
-                    labelText="Email"
+                    labelText='Email'
                     required
-                    placeholder="Enter Email"
+                    placeholder='Enter Email'
                     onChange={handleChange}
+                    isValid={validationRules.email}
                   />
                   <FormInput
-                    name="password"
+                    name='password'
                     value={password}
-                    labelText="password"
+                    labelText='password'
                     required
-                    placeholder="Enter Password"
+                    placeholder='Enter Password'
                     onChange={handleChange}
+                    isValid={validationRules.password}
                   />
 
                   <Button
-                    color="primary"
-                    className="btn-block"
+                    color='primary'
+                    className='btn-block'
                     onClick={handleSubmit}
                   >
                     Login
                   </Button>
                 </Form>
+                <p>
+                  Forgot Password?{' '}
+                  <Link to='/auth/reset-password'> Reset Password </Link>{' '}
+                </p>
               </CardBody>
             </Card>
           </Col>
