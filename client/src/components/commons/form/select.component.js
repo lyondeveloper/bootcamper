@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
-export const select = () => {
-  return <div></div>;
+const FormSelect = () => {
+  return (
+    <Fragment>
+      <h1>Select form</h1>
+    </Fragment>
+  );
 };
+
+export default FormSelect;
