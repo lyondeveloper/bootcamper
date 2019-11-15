@@ -1,6 +1,6 @@
-import React, { Fragment, memo } from 'react';
-import PropTypes from 'prop-types';
-import { Input, FormGroup, FormFeedback, Label } from 'reactstrap';
+import React, { Fragment, memo } from "react";
+import PropTypes from "prop-types";
+import { Input, FormGroup, FormFeedback, Label } from "reactstrap";
 
 const FormInput = ({
   name,
@@ -24,6 +24,7 @@ const FormInput = ({
             name={name}
             type={type}
             className={className}
+            placeholder={placeholder}
             value={value}
             onChange={onChange}
             onBlur={onBlur}
@@ -62,13 +63,13 @@ FormInput.propTypes = {
 };
 
 FormInput.defaultProps = {
-  inputClassName: '',
-  type: 'text',
-  placeholder: '',
-  labelText: '',
+  inputClassName: "",
+  type: "text",
+  placeholder: "",
+  labelText: "",
   required: false,
   isValid: true,
-  errorText: 'This field is required',
+  errorText: "This field is required",
   onBlur: () => {}
 };
 

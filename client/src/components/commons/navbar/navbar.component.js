@@ -1,5 +1,5 @@
-import React, { useState, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, Fragment } from "react";
+import { Link } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -14,7 +14,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle
-} from 'reactstrap';
+} from "reactstrap";
 
 const Header = () => {
   const [state, setState] = useState({
@@ -27,35 +27,37 @@ const Header = () => {
 
   return (
     <Fragment>
-      <Navbar className='fixed-top bg-danger' dark expand='md'>
+      <Navbar className="fixed-top bg-danger" dark expand="md">
         <Container>
-          <NavbarBrand href='/'>
-            {' '}
-            <i className='fas fa-laptop-code'></i> DevCamper{' '}
+          <NavbarBrand href="/">
+            {" "}
+            <i className="fas fa-laptop-code"></i> DevCamper{" "}
           </NavbarBrand>
           <NavbarToggler onClick={toggleCollapsable} />
           <Collapse isOpen={isOpen} navbar>
-            <Nav className='ml-auto' navbar>
+            <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href='/auth/login'>
-                  <i className='fas fa-sign-in-alt'></i> Login
+                <NavLink tag={Link} to="/auth/login">
+                  <i className="fas fa-sign-in-alt"></i> Login
                 </NavLink>
               </NavItem>
 
               <NavItem>
-                <NavLink href='/auth/register'>
-                  <i className='fas fa-user-plus'></i> Register
+                <NavLink tag={Link} to="/auth/register">
+                  <i className="fas fa-sign-in-alt"></i> Register
                 </NavLink>
               </NavItem>
 
               <NavItem>
-                <NavLink className='d-none d-sm-block' href='#!'>
+                <NavLink className="d-none d-sm-block" href="#!">
                   |
                 </NavLink>
               </NavItem>
 
               <NavItem>
-                <NavLink href='/bootcamps'>Browse Bootcamps</NavLink>
+                <NavLink tag={Link} to="/bootcamps">
+                  Browse Bootcamps
+                </NavLink>
               </NavItem>
             </Nav>
           </Collapse>
