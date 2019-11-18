@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { Container, Row, Col, Form, Button } from 'reactstrap';
+import { Container, Row, Col, Form, Button } from "reactstrap";
 
-import { initialState } from './showcase.model';
+import { initialState } from "./showcase.model";
 
-import FormInput from '../commons/form/input.component';
+import FormInput from "../commons/form/input.component";
+
+import { dynamicFormValidation } from "../../utils/functions/is-valid";
 
 import {
   ShowcaseContainer,
   DarkOverlay,
   ShowcaseInner
-} from './showcase.styles';
+} from "./showcase.styles";
 
 const ShowCase = () => {
   const [state, setState] = useState({ ...initialState });
@@ -22,23 +24,9 @@ const ShowCase = () => {
   };
 
   const isValid = () => {
-    const keys = Object.keys(formPayload);
-    let next;
+    const { next, rules } = dynamicFormValidation(formPayload, validationRules);
 
-    // Checking the input to valid or invalid with the
-    // validation rules, then returning true or false depending
-    // on the result
-    keys.forEach(key => {
-      if (formPayload[key] === '' || formPayload[key] === 0) {
-        validationRules[key] = false;
-        next = false;
-      } else {
-        validationRules[key] = true;
-        next = true;
-      }
-    });
-
-    setState({ ...state, validationRules });
+    setState({ ...state, validationRules: rules });
 
     return next;
   };
@@ -56,41 +44,47 @@ const ShowCase = () => {
       <Container>
         <DarkOverlay>
           <ShowcaseInner>
-            <h1 className='display-4'>Find a Code Bootcamp</h1>
-            <p className='lead'>
+            <h1 className="display-4">Find a Code Bootcamp</h1>
+            <p className="lead">
               Find, rate and read reviews on coding bootcamps
             </p>
             <Form>
               <Row>
                 <Col md={6}>
                   <FormInput
-                    name='milesFrom'
-                    placeholder='Miles From'
+                    name="milesFrom"
+                    placeholder="Miles From"
                     value={formPayload.milesFrom}
-                    className='form-control'
+                    className="form-control"
                     onChange={handleChange}
                     isValid={validationRules.milesFrom}
                     required
+                    inputType="text"
                   />
                 </Col>
-
                 <Col md={6}>
                   <FormInput
-                    name='zipcode'
+                    name="zipcode"
                     value={formPayload.zipcode}
-                    className='form-control'
-                    placeholder='Enter Zipcode'
+                    className="form-control"
+                    placeholder="Enter Zipcode"
                     onChange={handleChange}
                     isValid={validationRules.zipcode}
                     required
+                    inputType="text"
                   />
                 </Col>
               </Row>
+
               <Row>
                 <Col md={12}>
-                  <Button color='danger' onClick={handleSubmit}>
-                    {' '}
-                    Find Bootcamps{' '}
+                  <Button
+                    className="btn-block"
+                    color="danger"
+                    onClick={handleSubmit}
+                  >
+                    {" "}
+                    Find Bootcamps{" "}
                   </Button>
                 </Col>
               </Row>

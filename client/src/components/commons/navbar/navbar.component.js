@@ -29,10 +29,12 @@ const Header = () => {
     <Fragment>
       <Navbar className="fixed-top bg-danger" dark expand="md">
         <Container>
-          <NavbarBrand href="/">
-            {" "}
-            <i className="fas fa-laptop-code"></i> DevCamper{" "}
-          </NavbarBrand>
+          <NavLink tag={Link} to="/">
+            <NavbarBrand href="/">
+              {" "}
+              <i className="fas fa-laptop-code"></i> DevCamper{" "}
+            </NavbarBrand>
+          </NavLink>
           <NavbarToggler onClick={toggleCollapsable} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>

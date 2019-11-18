@@ -1,16 +1,17 @@
 export const initialFormPayload = {
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-  role: ''
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  role: ""
 };
 
 export const initialValidationRules = {
   name: true,
   email: true,
   password: true,
-  confirmPassword: true
+  confirmPassword: true,
+  role: true
 };
 
 export const layout = {
@@ -18,15 +19,15 @@ export const layout = {
     values: [
       {
         id: 0,
-        value: ''
+        value: ""
       },
       {
         id: 1,
-        value: 'Regular User (Browse, Write reviews, etc)'
+        value: "Regular User (Browse, Write reviews, etc)"
       },
       {
         id: 2,
-        value: 'Bootcamp Publisher'
+        value: "Bootcamp Publisher"
       }
     ]
   }
