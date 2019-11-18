@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   Form,
@@ -10,15 +10,15 @@ import {
   Card,
   CardBody,
   Button
-} from "reactstrap";
+} from 'reactstrap';
 
-import FormInput from "../commons/form/input.component";
+import FormInput from '../../commons/form/input.component';
 
-import { initialState } from "./login.model";
+import { initialState } from './login.model';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
-import { dynamicFormValidation } from "../../utils/functions/is-valid";
+import { dynamicFormValidation } from '../../../utils/functions/is-valid';
 
 const Login = ({ match }) => {
   const [state, setState] = useState({ ...initialState });
@@ -41,19 +41,19 @@ const Login = ({ match }) => {
   const handleSubmit = () => {
     if (isValid()) {
       //do stuff with API
-      toast.success("Login succesfully, wait a second...");
+      toast.success('Login succesfully, wait a second...');
     }
   };
 
   return (
-    <Container className="mt-5">
+    <Container className='mt-5'>
       <Row>
-        <Col md={6} className="m-auto">
-          <Card color="white" className="p-4 mb-4">
+        <Col md={6} className='m-auto'>
+          <Card color='white' className='p-4 mb-4'>
             <CardBody>
               <h1>
-                {" "}
-                <i class="fas fa-sign-in-alt"></i> Login
+                {' '}
+                <i class='fas fa-sign-in-alt'></i> Login
               </h1>
               <p>
                 Log in to list your bootcamp or rate, review and favorite
@@ -61,39 +61,39 @@ const Login = ({ match }) => {
               </p>
               <Form>
                 <FormInput
-                  name="email"
+                  name='email'
                   value={email}
-                  labelText="Email"
+                  labelText='Email'
                   required
-                  placeholder="Enter Email"
-                  inputType="labelText"
+                  placeholder='Enter Email'
+                  inputType='labelText'
                   onChange={handleChange}
                   isValid={validationRules.email}
                 />
                 <FormInput
-                  name="password"
+                  name='password'
                   value={password}
-                  labelText="Password"
+                  labelText='Password'
                   required
-                  inputType="labelText"
-                  type="password"
-                  placeholder="Enter Password"
+                  inputType='labelText'
+                  type='password'
+                  placeholder='Enter Password'
                   onChange={handleChange}
                   isValid={validationRules.password}
                 />
                 <FormGroup>
                   <Button
-                    color="primary"
-                    className="btn-block"
+                    color='primary'
+                    className='btn-block'
                     onClick={handleSubmit}
                   >
                     Login
                   </Button>
                 </FormGroup>
               </Form>
-              <p className="pt-4">
-                Forgot Password?{" "}
-                <Link to="/auth/reset-password"> Reset Password </Link>{" "}
+              <p className='pt-4'>
+                Forgot Password?{' '}
+                <Link to='/auth/reset-password'> Reset Password </Link>{' '}
               </p>
             </CardBody>
           </Card>

@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Container, Row, Col, Form, Button } from "reactstrap";
+import { Container, Row, Col, Form, Button } from 'reactstrap';
 
-import { initialState } from "./showcase.model";
+import { initialState } from './showcase.model';
 
-import FormInput from "../commons/form/input.component";
+import FormInput from '../../commons/form/input.component';
 
-import { dynamicFormValidation } from "../../utils/functions/is-valid";
+import { dynamicFormValidation } from '../../../utils/functions/is-valid';
 
 import {
   ShowcaseContainer,
   DarkOverlay,
   ShowcaseInner
-} from "./showcase.styles";
+} from './showcase.styles';
 
 const ShowCase = () => {
   const [state, setState] = useState({ ...initialState });
@@ -44,34 +44,34 @@ const ShowCase = () => {
       <Container>
         <DarkOverlay>
           <ShowcaseInner>
-            <h1 className="display-4">Find a Code Bootcamp</h1>
-            <p className="lead">
+            <h1 className='display-4'>Find a Code Bootcamp</h1>
+            <p className='lead'>
               Find, rate and read reviews on coding bootcamps
             </p>
             <Form>
               <Row>
                 <Col md={6}>
                   <FormInput
-                    name="milesFrom"
-                    placeholder="Miles From"
+                    name='milesFrom'
+                    placeholder='Miles From'
                     value={formPayload.milesFrom}
-                    className="form-control"
+                    className='form-control'
                     onChange={handleChange}
                     isValid={validationRules.milesFrom}
                     required
-                    inputType="text"
+                    inputType='text'
                   />
                 </Col>
                 <Col md={6}>
                   <FormInput
-                    name="zipcode"
+                    name='zipcode'
                     value={formPayload.zipcode}
-                    className="form-control"
-                    placeholder="Enter Zipcode"
+                    className='form-control'
+                    placeholder='Enter Zipcode'
                     onChange={handleChange}
                     isValid={validationRules.zipcode}
                     required
-                    inputType="text"
+                    inputType='text'
                   />
                 </Col>
               </Row>
@@ -79,12 +79,12 @@ const ShowCase = () => {
               <Row>
                 <Col md={12}>
                   <Button
-                    className="btn-block"
-                    color="danger"
+                    className='btn-block'
+                    color='danger'
                     onClick={handleSubmit}
                   >
-                    {" "}
-                    Find Bootcamps{" "}
+                    {' '}
+                    Find Bootcamps{' '}
                   </Button>
                 </Col>
               </Row>

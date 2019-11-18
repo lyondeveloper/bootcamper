@@ -1,10 +1,12 @@
-import React, { Suspense, lazy } from "react";
-import { Route } from "react-router-dom";
+import React, { Suspense, lazy } from 'react';
+import { Route } from 'react-router-dom';
 
-const Login = lazy(() => import("../../login/login.component"));
-const Register = lazy(() => import("../../register/register.component"));
+const Login = lazy(() => import('../../screens/login/login.component'));
+const Register = lazy(() =>
+  import('../../screens/register/register.component')
+);
 const ResetPassword = lazy(() =>
-  import("../../reset-password/reset-password.component")
+  import('../../screens/reset-password/reset-password.component')
 );
 
 const Auth = ({ match }) => (

@@ -1,12 +1,8 @@
-import React, { Fragment } from 'react';
-import Showcase from '../../showcase/showcase.component';
+import React from 'react';
+import Showcase from '../../screens/showcase/showcase.component';
 
 const HomePage = () => {
-  return (
-    <Fragment>
-      <Showcase />
-    </Fragment>
-  );
+  return <Showcase />;
 };
 
 export default HomePage;

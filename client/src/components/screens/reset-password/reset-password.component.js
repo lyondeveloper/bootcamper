@@ -1,14 +1,14 @@
-import React, { useState, Fragment } from "react";
-import { Link } from "react-router-dom";
-import FormInput from "../commons/form/input.component";
+import React, { useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import FormInput from '../../commons/form/input.component';
 
-import { Container, Row, Col, Card, CardBody, Form, Button } from "reactstrap";
+import { Container, Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
 
-import { initialState } from "./reset-password.model";
+import { initialState } from './reset-password.model';
 
-import { dynamicFormValidation } from "../../utils/functions/is-valid";
+import { dynamicFormValidation } from '../../../utils/functions/is-valid';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 const ResetPassword = ({ match }) => {
   const [state, setState] = useState({ ...initialState });
@@ -30,37 +30,37 @@ const ResetPassword = ({ match }) => {
   const handleSubmit = () => {
     if (isValid()) {
       // do stuff with API
-      toast.success("Your password have been restored");
+      toast.success('Your password have been restored');
     }
   };
 
   return (
-    <Container className="mt-5">
+    <Container className='mt-5'>
       <Row>
-        <Col md={8} className="m-auto">
-          <Card className="bg-white py-2 px-4">
+        <Col md={8} className='m-auto'>
+          <Card className='bg-white py-2 px-4'>
             <CardBody>
-              <Link to="/auth/login">Back to login</Link>
-              <h1 className="mb-2">Reset Password</h1>
+              <Link to='/auth/login'>Back to login</Link>
+              <h1 className='mb-2'>Reset Password</h1>
               <p>
                 Use this form to reset your password using the registered email
                 address.
               </p>
               <Form>
                 <FormInput
-                  inputType="labelText"
-                  labelText="Enter Email"
+                  inputType='labelText'
+                  labelText='Enter Email'
                   onChange={handleChange}
                   value={email}
-                  name="email"
-                  placeholder="Enter Email"
+                  name='email'
+                  placeholder='Enter Email'
                   required
                   isValid={validationRules.email}
                 />
                 <Button
-                  color="dark"
-                  type="submit"
-                  className="btn-block"
+                  color='dark'
+                  type='submit'
+                  className='btn-block'
                   onClick={handleSubmit}
                 >
                   Login
