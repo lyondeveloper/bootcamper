@@ -1,24 +1,22 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import FormInput from '../../commons/form/input.component';
+// Components
+import Sidebar from '../../screens/bootcamps/sidebar/sidebar.component';
+import Filter from '../../screens/bootcamps/filter/filter.component';
+import BootcampOverview from '../../screens/bootcamps/bootcamp-overview/bootcamp-overview.component';
 
-import { Container, Row, Col, Card, CardBody } from 'reactstrap';
+import { Container, Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
 
 const Bootcamps = () => {
   return (
-    <section className='browse my-5'>
+    <section className='browse mt-5 '>
       <Container>
         <Row>
           <Col md={4}>
-            <FormInput
-              onChange={() => {}}
-              value=''
-              name='miles'
-              inputType='text'
-              placeholder='Miles From'
-              required
-            />
+            <Sidebar />
+            <Filter />
+            <BootcampOverview />
           </Col>
         </Row>
       </Container>

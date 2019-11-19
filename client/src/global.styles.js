@@ -13,6 +13,10 @@ const GlobalStyles = createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+
+  .parent {
+    margin-top: 8rem !important;
+  }
 `;
 
 export default GlobalStyles;
