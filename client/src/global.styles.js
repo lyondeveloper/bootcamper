@@ -14,7 +14,7 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
   }
 
-  .parent {
+  .section {
     margin-top: 8rem !important;
   }
 `;

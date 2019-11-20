@@ -1,6 +1,6 @@
 import React, { Fragment, memo } from 'react';
 import PropTypes from 'prop-types';
-import { Input, FormGroup, FormFeedback, Label, Col, Row } from 'reactstrap';
+import { Input, FormGroup, FormFeedback, Label } from 'reactstrap';
 
 const FormInput = ({
   name,
@@ -36,6 +36,8 @@ const FormInput = ({
           invalid={required && !isValid && value.length < 1}
         />
       );
+
+      break;
 
     case 'labelText':
       inputContent = (

@@ -38,9 +38,7 @@ const ShowCase = () => {
   };
 
   return (
-    <ShowcaseContainer
-      imageUrl={`${process.env.PUBLIC_URL}/static/img/showcase.jpg`}
-    >
+    <ShowcaseContainer imageUrl={''}>
       <Container>
         <DarkOverlay>
           <ShowcaseInner>

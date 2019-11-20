@@ -53,7 +53,7 @@ const Login = ({ match }) => {
             <CardBody>
               <h1>
                 {' '}
-                <i class='fas fa-sign-in-alt'></i> Login
+                <i className='fas fa-sign-in-alt'></i> Login
               </h1>
               <p>
                 Log in to list your bootcamp or rate, review and favorite

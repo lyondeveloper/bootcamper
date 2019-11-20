@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
+import { Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
 
 import FormInput from '../../../commons/form/input.component';
 

@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Navbar,
@@ -8,12 +8,7 @@ import {
   Nav,
   Container,
   NavItem,
-  NavLink,
-  Button,
-  UncontrolledDropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownToggle
+  NavLink
 } from 'reactstrap';
 
 const Header = () => {
@@ -29,8 +24,10 @@ const Header = () => {
     <Navbar className='fixed-top bg-danger' dark expand='md'>
       <Container>
         <NavLink tag={Link} to='/'>
-          {' '}
-          <i className='fas fa-laptop-code'></i> DevCamper{' '}
+          <NavbarBrand href='/'>
+            {' '}
+            <i className='fas fa-laptop-code'></i> DevCamper{' '}
+          </NavbarBrand>
         </NavLink>
         <NavbarToggler onClick={toggleCollapsable} />
         <Collapse isOpen={isOpen} navbar>

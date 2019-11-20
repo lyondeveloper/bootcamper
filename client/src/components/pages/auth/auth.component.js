@@ -10,15 +10,17 @@ const ResetPassword = lazy(() =>
 );
 
 const Auth = ({ match }) => (
-  <Suspense fallback={<h1>Loading</h1>}>
-    <Route exact path={`${match.path}/login`} component={Login} />
-    <Route exact path={`${match.path}/register`} component={Register} />
-    <Route
-      exact
-      path={`${match.path}/reset-password`}
-      component={ResetPassword}
-    />
-  </Suspense>
+  <div className='section'>
+    <Suspense fallback={<h1>Loading</h1>}>
+      <Route exact path={`${match.path}/login`} component={Login} />
+      <Route exact path={`${match.path}/register`} component={Register} />
+      <Route
+        exact
+        path={`${match.path}/reset-password`}
+        component={ResetPassword}
+      />
+    </Suspense>
+  </div>
 );
 
 export default Auth;

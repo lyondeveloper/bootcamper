@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Container, Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
+import { Card, CardBody, Form, Button } from 'reactstrap';
 
 import FormInput from '../../../commons/form/input.component';
 
