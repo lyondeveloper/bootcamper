@@ -1,26 +1,37 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Suspense, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 // Components
 import Header from './components/commons/navbar/navbar.component';
-import Homepage from './components/pages/homepage/homepage.component';
-import Auth from './components/pages/auth/auth.component';
-import Bootcamps from './components/pages/bootcamps/bootcamps.component';
-
+import Spinner from './components/commons/spinner/spinner.component';
+import ErrorBoundary from './components/commons/error-boundary/error-boundary.component';
 import GlobalStyles from './global.styles';
+
+// Lazy components
+const Homepage = lazy(() =>
+  import('./components/pages/homepage/homepage.component')
+);
+const Auth = lazy(() => import('./components/pages/auth/auth.component'));
+const Bootcamps = lazy(() =>
+  import('./components/pages/bootcamps/bootcamps.component')
+);
 
 const App = () => {
   return (
     <Fragment>
-      <Header />
       <GlobalStyles />
+      <Header />
       <ToastContainer />
-      <Switch>
-        <Route exact path='/' component={Homepage} />
-        <Route path='/auth' component={Auth} />
-        <Route path='/bootcamps' component={Bootcamps} />
-      </Switch>
+      <ErrorBoundary>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            <Route exact path='/' component={Homepage} />
+            <Route path='/auth' component={Auth} />
+            <Route path='/bootcamps' component={Bootcamps} />
+          </Switch>
+        </Suspense>
+      </ErrorBoundary>
     </Fragment>
   );
 };

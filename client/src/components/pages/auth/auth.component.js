@@ -1,6 +1,8 @@
 import React, { Suspense, lazy } from 'react';
 import { Route } from 'react-router-dom';
 
+import Spinner from '../../commons/spinner/spinner.component';
+
 const Login = lazy(() => import('../../screens/login/login.component'));
 const Register = lazy(() =>
   import('../../screens/register/register.component')
@@ -11,7 +13,7 @@ const ResetPassword = lazy(() =>
 
 const Auth = ({ match }) => (
   <div className='section'>
-    <Suspense fallback={<h1>Loading</h1>}>
+    <Suspense fallback={<Spinner />}>
       <Route exact path={`${match.path}/login`} component={Login} />
       <Route exact path={`${match.path}/register`} component={Register} />
       <Route
