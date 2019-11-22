@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getBootcampsStart } from '../../../redux/bootcamps/bootcamp.actions';
 
 // Components
-import Sidebar from '../../screens/bootcamps/sidebar/sidebar.component';
-import Filter from '../../screens/bootcamps/filter/filter.component';
-import BootcampOverviewContainer from '../../screens/bootcamps/bootcamp-overview/bootcamp-overview.container';
+import Spinner from '../../commons/spinner/spinner.component';
 
-import { Container, Row, Col } from 'reactstrap';
-
-const Bootcamps = () => (
-  <section className='section'>
-    <Container>
-      <Row>
-        <Col md={4}>
-          <Sidebar />
-          <Filter />
-        </Col>
-        <Col md={8}>
-          <BootcampOverviewContainer />
-        </Col>
-      </Row>
-    </Container>
-  </section>
+const Bootcamps = lazy(() =>
+  import('../../screens/bootcamps/bootcamps.component')
 );
 
-export default Bootcamps;
+const BootcampContainer = lazy(() =>
+  import('../../screens/bootcamp/bootcamp.container')
+);
+
+const BootcampsPage = ({ match, getBootcamps }) => {
+  useEffect(() => {
+    getBootcamps();
+  }, [getBootcamps]);
+
+  return (
+    <Suspense fallback={<Spinner />}>
+      <Route exact path={`${match.path}`} component={Bootcamps} />
+      <Route exact path={`${match.path}/:slug`} component={BootcampContainer} />
+    </Suspense>
+  );
+};
+
+const mapDispatchToProps = dispatch => ({
+  getBootcamps: () => dispatch(getBootcampsStart())
+});
+
+export default connect(null, mapDispatchToProps)(BootcampsPage);

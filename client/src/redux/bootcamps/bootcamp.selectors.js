@@ -7,6 +7,11 @@ export const selectBootcamps = createSelector(
   bootcamps => bootcamps.bootcamps
 );
 
+export const selectSingleBootcamp = createSelector(
+  [selectBootcampsState],
+  bootcamps => bootcamps.singleBootcamp
+);
+
 export const selectLoading = createSelector(
   [selectBootcampsState],
   bootcamps => bootcamps.loading
@@ -15,4 +20,9 @@ export const selectLoading = createSelector(
 export const selectIsLoaded = createSelector(
   [selectBootcampsState],
   bootcamps => !!bootcamps.bootcamps
+);
+
+export const selectIsLoadedBootcamp = createSelector(
+  [selectBootcampsState],
+  bootcamps => !!bootcamps.singleBootcamp
 );

@@ -1,8 +1,8 @@
 import types from './bootcamps.types';
 
 const initialState = {
-  bootcamps: null,
-  singleBootcamp: null,
+  bootcamps: [],
+  singleBootcamp: {},
   loading: false,
   error: null
 };

@@ -8,22 +8,21 @@ const ErrorResponse = require('../utils/errorResponse');
 exports.getBootcamps = asyncHandler(async (req, res, next) => {
   const bootcamps = await Bootcamp.find();
 
-  res.json({ success: true, count: bootcamps.length, data: bootcamps });
+  res.json({ success: true, count: bootcamps.length, bootcamps });
 });
 
 // @desc    Get single bootcamp
-// @route   GET /api/v1/bootcamps/:id
+// @route   GET /api/v1/bootcamps/:slug
 // @access  Public
 exports.getSingleBootcamp = asyncHandler(async (req, res, next) => {
-  const bootcamp = await Bootcamp.findById(req.params.id);
-
+  const bootcamp = await Bootcamp.findOne({ slug: req.params.slug });
   if (!bootcamp) {
     return next(
-      new ErrorResponse(`Bootcamp not found with id ${req.params.id}`, 404)
+      new ErrorResponse(`Bootcamp not found with slug ${req.params.slug}`, 404)
     );
   }
 
-  res.status(200).json({ success: true, data: bootcamp });
+  res.status(200).json({ success: true, bootcamp });
 });
 
 // @desc    Create bootcamp
@@ -33,7 +32,7 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
   const bootcamp = await Bootcamp.create(req.body);
   res.status(201).json({
     success: true,
-    data: bootcamp
+    bootcamp
   });
 });
 
@@ -52,7 +51,7 @@ exports.editBootcamp = asyncHandler(async (req, res, next) => {
     );
   }
 
-  res.status(200).json({ success: true, data: bootcamp });
+  res.status(200).json({ success: true, bootcamp });
 });
 
 // @desc    Delete bootcamp
