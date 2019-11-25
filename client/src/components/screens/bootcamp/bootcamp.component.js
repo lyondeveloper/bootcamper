@@ -1,11 +1,18 @@
 import React, { useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  ListGroup,
+  ListGroupItem
+} from 'reactstrap';
 
 const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
   useEffect(() => {
     getSingleBootcamp(match.params.slug);
-  }, [getSingleBootcamp]);
-  // debugger;
+  }, [getSingleBootcamp, match.params.slug]);
   return (
     <div className='section'>
       <Container>
@@ -79,6 +86,71 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
               </div>{' '}
               Rating{' '}
             </h1>
+
+            <Link to='/reviews'>
+              <Button className='btn-dark btn-block my-3'>
+                <i className='fas fa-comments' /> Read Reviews
+              </Button>
+            </Link>
+
+            <Link to='/add-review'>
+              <Button className='btn-light btn-block my-3'>
+                <i className='fas fa-pencil-alt' /> Write a Review
+              </Button>
+            </Link>
+
+            <Link to={bootcamp.website} target='_blank'>
+              <Button className='btn-secondary btn-block my-3'>
+                <i className='fas fa-globe' /> Visit Website
+              </Button>
+            </Link>
+
+            {/* housing, TODO: create new component for list group item with icon */}
+            <ListGroup className='list-group-flush mt-4'>
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.housing
+                      ? 'fas fa-check text-success'
+                      : ' fas fa-times text-danger'
+                  }`}
+                />
+                <span className='ml-2'>Housing</span>
+              </ListGroupItem>
+
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.jobAssistance
+                      ? 'fas fa-check text-success'
+                      : 'fas fa-times text-danger'
+                  }`}
+                />
+                <span className='ml-2'> Job Assistance </span>
+              </ListGroupItem>
+
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.jobGuarantee
+                      ? 'fas fa-check text-success'
+                      : ' fas fa-times text-danger'
+                  }`}
+                />
+                <span className='ml-2'> Job Guarantee </span>
+              </ListGroupItem>
+
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.acceptGi
+                      ? 'fas fa-check text-success'
+                      : ' fas fa-times text-danger'
+                  }`}
+                />
+                <span className='ml-2'> Accepts GI Bill </span>
+              </ListGroupItem>
+            </ListGroup>
           </Col>
         </Row>
       </Container>
