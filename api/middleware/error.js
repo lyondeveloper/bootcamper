@@ -5,26 +5,25 @@ const errorHandler = (err, req, res, next) => {
 
   error.message = err.message;
 
-  // Log to console for the developer
+  // Log to console for dev
   console.log(err);
 
   // Mongoose bad ObjectId
   if (err.name === 'CastError') {
-    const message = `Resource not found with id ${err.value}`;
+    const message = `Resource not found`;
     error = new ErrorResponse(message, 404);
   }
 
-  // Mongoose Duplicate key
+  // Mongoose duplicate key
   if (err.code === 11000) {
     const message = 'Duplicate field value entered';
     error = new ErrorResponse(message, 400);
   }
 
-  // Mongoose validaion error
+  // Mongoose validation error
   if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map(elem => elem.message);
-
-    error = new ErrorResponse(message, 404);
+    const message = Object.values(err.errors).map(val => val.message);
+    error = new ErrorResponse(message, 400);
   }
 
   res.status(error.statusCode || 500).json({

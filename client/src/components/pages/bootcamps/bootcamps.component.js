@@ -22,7 +22,7 @@ const BootcampsPage = ({ match, getBootcamps }) => {
   return (
     <Suspense fallback={<Spinner />}>
       <Route exact path={`${match.path}`} component={Bootcamps} />
-      <Route exact path={`${match.path}/:slug`} component={BootcampContainer} />
+      <Route exact path={`${match.path}/:id`} component={BootcampContainer} />
     </Suspense>
   );
 };

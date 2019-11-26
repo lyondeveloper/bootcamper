@@ -11,10 +11,11 @@ import {
   getSingleBootcampSuccess
 } from './bootcamp.actions';
 
-export function* fetchSingleBootcampExecute({ payload: slug }) {
+export function* fetchSingleBootcampExecute({ payload: id }) {
+  debugger;
   try {
-    const { data, status } = yield axios.get(`/api/v1/bootcamps/${slug}`);
-    if (status === 200) yield put(getSingleBootcampSuccess(data.bootcamp));
+    const { data, status } = yield axios.get(`/api/v1/bootcamps/${id}`);
+    if (status === 200) yield put(getSingleBootcampSuccess(data.data));
   } catch (err) {
     yield put(getSingleBootcampFailure(err));
   }
@@ -24,7 +25,7 @@ export function* fetchBootcampsExecute() {
   try {
     const { data, status } = yield axios.get('/api/v1/bootcamps');
 
-    if (status === 200) yield put(getBootcampsSuccess(data.bootcamps));
+    if (status === 200) yield put(getBootcampsSuccess(data.data));
   } catch (err) {
     yield put(getBootcampsFailure(err));
   }

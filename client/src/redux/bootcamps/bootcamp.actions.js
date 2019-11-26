@@ -14,9 +14,9 @@ export const getBootcampsSuccess = data => ({
   payload: data
 });
 
-export const getSingleBootcampStart = slug => ({
+export const getSingleBootcampStart = id => ({
   type: types.GET_SINGLE_BOOTCAMP_START,
-  payload: slug
+  payload: id
 });
 
 export const getSingleBootcampFailure = error => ({
