@@ -1,25 +1,32 @@
-import React, { useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import React, { useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  ListGroup,
+  ListGroupItem
+} from "reactstrap";
+import { Link } from "react-router-dom";
 
 const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
   useEffect(() => {
     getSingleBootcamp(match.params.slug);
-  }, [getSingleBootcamp]);
-  // debugger;
+  }, [getSingleBootcamp, match.params.slug]);
   return (
-    <div className='section'>
+    <div className="section">
       <Container>
         <Row>
           <Col md={8}>
             <h1> {bootcamp.name} </h1>
             <p>{bootcamp.description}</p>
-            <p className='lead mb-4'>
-              {' '}
-              Average Course Cost:{' '}
-              <span className='text-primary'>
-                {' '}
-                {bootcamp.averageCost ? bootcamp.averageCost : 0}{' '}
-              </span>{' '}
+            <p className="lead mb-4">
+              {" "}
+              Average Course Cost:{" "}
+              <span className="text-primary">
+                {" "}
+                {bootcamp.averageCost ? bootcamp.averageCost : 0}{" "}
+              </span>{" "}
             </p>
             {/* courses section: TODO */}
 
@@ -71,14 +78,78 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
 
           <Col md={4}>
             {/* <img src="" alt=""/> */}
-            {/* RATING TO DO: I need to create the query to bring the respective ratings */}
-            <h1 className='text-center-my-4'>
-              {' '}
-              <div className='badge badge-secondary badge-success rounded-circle p-3'>
+            {/* RATING TO DO: I need to create the query to bring the respective ratings, in the meantime lets hardcode it */}
+            <h1 className="text-center-my-4">
+              {" "}
+              <div className="badge badge-secondary badge-success rounded-circle p-3">
                 8.8
-              </div>{' '}
-              Rating{' '}
+              </div>{" "}
+              Rating{" "}
             </h1>
+
+            <Link>
+              <Button className="btn btn-dark btn-block my-3">
+                <i className="fas fa-comments"> Read Reviews </i>
+              </Button>
+            </Link>
+
+            <Link>
+              <Button className="btn btn-light btn-block my-3">
+                <i className="fas fa-pencil-alt"> Write a Review </i>
+              </Button>
+            </Link>
+
+            {/* TODO: CREATE COMPONENT FOR THIS LINK WITH BUTTON */}
+            <Link to={bootcamp.website}>
+              <Button className="btn btn-dark btn-block my-3">
+                <i className="fas fa-comments"> Read Reviews </i>
+              </Button>
+            </Link>
+
+            {/* TODO: SPLIT THIS LISTGROUP WITH ICON CODE IN SEPARATE COMPONENT */}
+
+            <ListGroup className="list-group-flush mt-4">
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.housing
+                      ? "fas fa-check text-success"
+                      : "fas fa-times text-danger"
+                  }`}
+                />
+                <span className="ml-3">Housing</span>
+              </ListGroupItem>
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.jobAssistance
+                      ? "fas fa-check text-success"
+                      : "fas fa-times text-danger"
+                  }`}
+                />
+                <span className="ml-3">Job Assistance</span>
+              </ListGroupItem>
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.jobGuarantee
+                      ? "fas fa-check text-success"
+                      : "fas fa-times text-danger"
+                  }`}
+                />
+                <span className="ml-3">Job Guarantee</span>
+              </ListGroupItem>
+              <ListGroupItem>
+                <i
+                  className={`${
+                    bootcamp.acceptGi
+                      ? "fas fa-check text-success"
+                      : "fas fa-times text-danger"
+                  }`}
+                />
+                <span className="ml-3">Acceps GI Bill</span>
+              </ListGroupItem>
+            </ListGroup>
           </Col>
         </Row>
       </Container>
