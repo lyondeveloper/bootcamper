@@ -15,7 +15,7 @@ const BootcampPreview = ({ bootcamp, match }) => (
         <Card>
           <CardBody>
             <CardTitle>
-              <Link to={`${match.path}/${bootcamp.slug}`}>{bootcamp.name}</Link>
+              <Link to={`${match.path}/${bootcamp.id}`}>{bootcamp.name}</Link>
               <span className='float-right badge badge-success'>
                 {' '}
                 Rating: {bootcamp.rating ? bootcamp.rating : 0}{' '}

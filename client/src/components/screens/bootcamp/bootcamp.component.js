@@ -1,18 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import {
   Container,
   Row,
   Col,
   Button,
   ListGroup,
-  ListGroupItem
+  ListGroupItem,
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  CardText
 } from "reactstrap";
-import { Link } from "react-router-dom";
 
-const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { createStructuredSelector } from "reselect";
+import {
+  selectSingleBootcamp,
+  selectIsLoadedBootcamp,
+  selectLoading
+} from "../../../redux/bootcamps/bootcamp.selectors";
+import { getSingleBootcampStart } from "../../../redux/bootcamps/bootcamp.actions";
+import withSpinner from "../../commons/with-spinner/with-spinner.component";
+
+const Bootcamp = ({ bootcamp, getSingleBootcamp, match, isLoaded }) => {
   useEffect(() => {
-    getSingleBootcamp(match.params.slug);
-  }, [getSingleBootcamp, match.params.slug]);
+    getSingleBootcamp(match.params.id);
+  }, ["match.params.id"]);
+
   return (
     <div className="section">
       <Container>
@@ -25,55 +43,39 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
               Average Course Cost:{" "}
               <span className="text-primary">
                 {" "}
-                {bootcamp.averageCost ? bootcamp.averageCost : 0}{" "}
+                {bootcamp.averageCost}{" "}
               </span>{" "}
             </p>
-            {/* courses section: TODO */}
-
-            {/* <div class='card mb-3'>
-              <h5 class='card-header bg-primary text-white'>
-                Front End Web Development
-              </h5>
-              <div class='card-body'>
-                <h5 class='card-title'>Duration: 8 Weeks</h5>
-                <p class='card-text'>
-                  This course will provide you with all of the essentials to
-                  become a successful frontend web developer. You will learn to
-                  master HTML, CSS and front end JavaScript, along with tools
-                  like Git, VSCode and front end frameworks like Vue
-                </p>
-                <ul class='list-group mb-3'>
-                  <li class='list-group-item'>Cost: $8,000 USD</li>
-                  <li class='list-group-item'>Skill Required: Beginner</li>
-                  <li class='list-group-item'>
-                    Scholarship Available:{' '}
-                    <i class='fas fa-check text-success' />{' '}
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div class='card mb-3'>
-              <h5 class='card-header bg-primary text-white'>
-                Full Stack Web Development
-              </h5>
-              <div class='card-body'>
-                <h5 class='card-title'>Duration: 12 Weeks</h5>
-                <p class='card-text'>
-                  In this course you will learn full stack web development,
-                  first learning all about the frontend with HTML/CSS/JS/Vue and
-                  then the backend with Node.js/Express/MongoDB
-                </p>
-                <ul class='list-group mb-3'>
-                  <li class='list-group-item'>Cost: $10,000 USD</li>
-                  <li class='list-group-item'>Skill Required: Intermediate</li>
-                  <li class='list-group-item'>
-                    Scholarship Available:{' '}
-                    <i class='fas fa-times text-danger' />{' '}
-                  </li>
-                </ul>
-              </div>
-            </div> */}
+            {/* Courses: TODO => Separate into new single component */}
+            {Object.keys(bootcamp).length > 0 && bootcamp.courses.length > 0 ? (
+              bootcamp.courses.map(course => (
+                <Card className="mb-3">
+                  <CardHeader className="bg-primary text-white">
+                    {course.title}
+                  </CardHeader>
+                  <CardBody>
+                    <CardTitle> Duration: {course.weeks} </CardTitle>
+                    <CardText> {course.description} </CardText>
+                    <ListGroup className="mb-3">
+                      <ListGroupItem>Cost: {course.tuition}</ListGroupItem>
+                      <ListGroupItem>
+                        Skill Required: {course.minimumSkill}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        Scholarship Available:{" "}
+                        {course.scholarshipAvailable ? (
+                          <i className="fas fa-check text-success" />
+                        ) : (
+                          <i className="fas fa-times text-danger" />
+                        )}
+                      </ListGroupItem>
+                    </ListGroup>
+                  </CardBody>
+                </Card>
+              ))
+            ) : (
+              <h3 className="text-primary"> </h3>
+            )}
           </Col>
 
           <Col md={4}>
@@ -87,38 +89,37 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
               Rating{" "}
             </h1>
 
-            <Link>
-              <Button className="btn btn-dark btn-block my-3">
-                <i className="fas fa-comments"> Read Reviews </i>
+            <Link to="/reviews">
+              <Button className="btn-dark btn-block my-3">
+                <i className="fas fa-comments" /> Read Reviews
               </Button>
             </Link>
 
-            <Link>
-              <Button className="btn btn-light btn-block my-3">
-                <i className="fas fa-pencil-alt"> Write a Review </i>
+            <Link to="/add-review">
+              <Button className="btn-light btn-block my-3">
+                <i className="fas fa-pencil-alt" /> Write a Review
               </Button>
             </Link>
 
-            {/* TODO: CREATE COMPONENT FOR THIS LINK WITH BUTTON */}
-            <Link to={bootcamp.website}>
-              <Button className="btn btn-dark btn-block my-3">
-                <i className="fas fa-comments"> Read Reviews </i>
+            <Link to={bootcamp.website} target="_blank">
+              <Button className="btn-secondary btn-block my-3">
+                <i className="fas fa-globe" /> Visit Website
               </Button>
             </Link>
 
-            {/* TODO: SPLIT THIS LISTGROUP WITH ICON CODE IN SEPARATE COMPONENT */}
-
+            {/* housing, TODO: create new component for list group item with icon */}
             <ListGroup className="list-group-flush mt-4">
               <ListGroupItem>
                 <i
                   className={`${
                     bootcamp.housing
                       ? "fas fa-check text-success"
-                      : "fas fa-times text-danger"
+                      : " fas fa-times text-danger"
                   }`}
                 />
-                <span className="ml-3">Housing</span>
+                <span className="ml-2">Housing</span>
               </ListGroupItem>
+
               <ListGroupItem>
                 <i
                   className={`${
@@ -127,27 +128,29 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
                       : "fas fa-times text-danger"
                   }`}
                 />
-                <span className="ml-3">Job Assistance</span>
+                <span className="ml-2"> Job Assistance </span>
               </ListGroupItem>
+
               <ListGroupItem>
                 <i
                   className={`${
                     bootcamp.jobGuarantee
                       ? "fas fa-check text-success"
-                      : "fas fa-times text-danger"
+                      : " fas fa-times text-danger"
                   }`}
                 />
-                <span className="ml-3">Job Guarantee</span>
+                <span className="ml-2"> Job Guarantee </span>
               </ListGroupItem>
+
               <ListGroupItem>
                 <i
                   className={`${
                     bootcamp.acceptGi
                       ? "fas fa-check text-success"
-                      : "fas fa-times text-danger"
+                      : " fas fa-times text-danger"
                   }`}
                 />
-                <span className="ml-3">Acceps GI Bill</span>
+                <span className="ml-2"> Accepts GI Bill </span>
               </ListGroupItem>
             </ListGroup>
           </Col>
@@ -157,4 +160,17 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
   );
 };
 
-export default Bootcamp;
+const mapStateToProps = createStructuredSelector({
+  bootcamp: selectSingleBootcamp,
+  isLoading: selectLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  getSingleBootcamp: id => dispatch(getSingleBootcampStart(id))
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  withSpinner
+)(Bootcamp);
