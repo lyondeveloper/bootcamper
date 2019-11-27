@@ -17,7 +17,7 @@ const BootcampContainer = lazy(() =>
 const BootcampsPage = ({ match, getBootcamps }) => {
   useEffect(() => {
     getBootcamps();
-  }, [getBootcamps]);
+  }, []);
 
   return (
     <Suspense fallback={<Spinner />}>

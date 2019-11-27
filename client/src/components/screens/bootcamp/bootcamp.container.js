@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import {
   selectSingleBootcamp,
-  selectIsLoadedBootcamp
+  selectIsLoadedBootcamp,
+  selectLoading
 } from '../../../redux/bootcamps/bootcamp.selectors';
 import { getSingleBootcampStart } from '../../../redux/bootcamps/bootcamp.actions';
 import withSpinner from '../../commons/with-spinner/with-spinner.component';
@@ -12,7 +13,7 @@ import Bootcamp from './bootcamp.component';
 
 const mapStateToProps = createStructuredSelector({
   bootcamp: selectSingleBootcamp,
-  isLoaded: selectIsLoadedBootcamp
+  isLoading: selectLoading
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Container,
@@ -14,48 +14,22 @@ import {
   CardText
 } from 'reactstrap';
 
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import {
+  selectSingleBootcamp,
+  selectIsLoadedBootcamp,
+  selectLoading
+} from '../../../redux/bootcamps/bootcamp.selectors';
+import { getSingleBootcampStart } from '../../../redux/bootcamps/bootcamp.actions';
+import withSpinner from '../../commons/with-spinner/with-spinner.component';
+
 const Bootcamp = ({ bootcamp, getSingleBootcamp, match, isLoaded }) => {
   useEffect(() => {
     getSingleBootcamp(match.params.id);
-  }, [getSingleBootcamp, match.params.id]);
-
-  debugger;
-
-  let coursesContent;
-
-  if (Object.keys(bootcamp).length > 0) {
-    if (bootcamp.courses.length > 0) {
-      coursesContent = bootcamp.courses.map(course => (
-        <Card className='mb-3'>
-          <CardHeader className='bg-primary text-white'>
-            {course.title}
-          </CardHeader>
-          <CardBody>
-            <CardTitle> Duration: {course.weeks} </CardTitle>
-            <CardText> {course.description} </CardText>
-            <ListGroup className='mb-3'>
-              <ListGroupItem>Cost: {course.tuition}</ListGroupItem>
-              <ListGroupItem>
-                Skill Required: {course.minimumSkill}
-              </ListGroupItem>
-              <ListGroupItem>
-                Scholarship Available:{' '}
-                {course.scholarshipAvailable ? (
-                  <i className='fas fa-check text-success' />
-                ) : (
-                  <i className='fas fa-times text-danger' />
-                )}
-              </ListGroupItem>
-            </ListGroup>
-          </CardBody>
-        </Card>
-      ));
-    } else {
-      coursesContent = (
-        <h3 className='text-primary'>No courses have been added yet;</h3>
-      );
-    }
-  }
+  }, ['match.params.id']);
 
   return (
     <div className='section'>
@@ -73,7 +47,35 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match, isLoaded }) => {
               </span>{' '}
             </p>
             {/* Courses: TODO => Separate into new single component */}
-            {coursesContent}
+            {Object.keys(bootcamp).length > 0 && bootcamp.courses.length > 0 ? (
+              bootcamp.courses.map(course => (
+                <Card className='mb-3'>
+                  <CardHeader className='bg-primary text-white'>
+                    {course.title}
+                  </CardHeader>
+                  <CardBody>
+                    <CardTitle> Duration: {course.weeks} </CardTitle>
+                    <CardText> {course.description} </CardText>
+                    <ListGroup className='mb-3'>
+                      <ListGroupItem>Cost: {course.tuition}</ListGroupItem>
+                      <ListGroupItem>
+                        Skill Required: {course.minimumSkill}
+                      </ListGroupItem>
+                      <ListGroupItem>
+                        Scholarship Available:{' '}
+                        {course.scholarshipAvailable ? (
+                          <i className='fas fa-check text-success' />
+                        ) : (
+                          <i className='fas fa-times text-danger' />
+                        )}
+                      </ListGroupItem>
+                    </ListGroup>
+                  </CardBody>
+                </Card>
+              ))
+            ) : (
+              <h3 className='text-primary'> </h3>
+            )}
           </Col>
 
           <Col md={4}>
@@ -158,4 +160,17 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match, isLoaded }) => {
   );
 };
 
-export default Bootcamp;
+const mapStateToProps = createStructuredSelector({
+  bootcamp: selectSingleBootcamp,
+  isLoading: selectLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  getSingleBootcamp: id => dispatch(getSingleBootcampStart(id))
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  withSpinner
+)(Bootcamp);

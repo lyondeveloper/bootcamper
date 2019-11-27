@@ -29,7 +29,8 @@ export default function bootcampReducer(state = initialState, action) {
       return {
         ...state,
         singleBootcamp: action.payload,
-        loading: false
+        loading: false,
+        error: null
       };
 
     case types.GET_BOOTCAMPS_FAILURE:
