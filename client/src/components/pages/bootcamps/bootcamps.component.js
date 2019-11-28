@@ -1,7 +1,5 @@
-import React, { Suspense, lazy, useEffect } from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getBootcampsStart } from '../../../redux/bootcamps/bootcamp.actions';
 
 // Components
 import Spinner from '../../commons/spinner/spinner.component';
@@ -14,21 +12,11 @@ const Bootcamp = lazy(() =>
   import('../../screens/bootcamp/bootcamp.component')
 );
 
-const BootcampsPage = ({ match, getBootcamps }) => {
-  useEffect(() => {
-    getBootcamps();
-  }, []);
+const BootcampsPage = ({ match, getBootcamps }) => (
+  <Suspense fallback={<Spinner />}>
+    <Route exact path={`${match.path}`} component={Bootcamps} />
+    <Route exact path={`${match.path}/:id`} component={Bootcamp} />
+  </Suspense>
+);
 
-  return (
-    <Suspense fallback={<Spinner />}>
-      <Route exact path={`${match.path}`} component={Bootcamps} />
-      <Route exact path={`${match.path}/:id`} component={Bootcamp} />
-    </Suspense>
-  );
-};
-
-const mapDispatchToProps = dispatch => ({
-  getBootcamps: () => dispatch(getBootcampsStart())
-});
-
-export default connect(null, mapDispatchToProps)(BootcampsPage);
+export default BootcampsPage;

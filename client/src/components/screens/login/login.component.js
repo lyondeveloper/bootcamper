@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 import {
   Form,
   FormGroup,
@@ -13,14 +14,12 @@ import {
 } from 'reactstrap';
 
 import FormInput from '../../commons/form/input.component';
-
 import { initialState } from './login.model';
+import { dynamicFormValidation } from '../../../utils/functions';
 
-import { toast } from 'react-toastify';
+import { loginUserStart } from '../../../redux/users/users.actions';
 
-import { dynamicFormValidation } from '../../../utils/functions/is-valid';
-
-const Login = ({ match }) => {
+const Login = ({ match, loginUser, history }) => {
   const [state, setState] = useState({ ...initialState });
 
   const { formPayload, validationRules } = state;
@@ -41,7 +40,13 @@ const Login = ({ match }) => {
   const handleSubmit = () => {
     if (isValid()) {
       //do stuff with API
-      toast.success('Login succesfully, wait a second...');
+
+      const data = {
+        email,
+        password
+      };
+
+      loginUser(data, history);
     }
   };
 
@@ -103,4 +108,8 @@ const Login = ({ match }) => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+  loginUser: (data, history) => dispatch(loginUserStart(data, history))
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(Login));

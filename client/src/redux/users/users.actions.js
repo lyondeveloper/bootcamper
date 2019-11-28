@@ -1,8 +1,27 @@
-import types from "./users.types";
+import types from './users.types';
 
-export const loginUserStart = data => ({
+export const logoutUser = () => ({
+  type: types.LOGOUT_USER
+});
+
+export const checkUserSessionStart = () => ({
+  type: types.CHECK_USER_SESSION_START
+});
+
+export const checkUserSessionSuccess = user => ({
+  type: types.CHECK_USER_SESSION_SUCCESS,
+  payload: user
+});
+
+export const checkUserSessionFailure = err => ({
+  type: types.CHECK_USER_SESSION_FAILURE,
+  payload: err
+});
+
+export const loginUserStart = (data, history) => ({
   type: types.LOGIN_USER_START,
-  payload: data
+  payload: data,
+  history
 });
 
 export const loginUserSuccess = user => ({
@@ -15,9 +34,10 @@ export const loginUserFailure = error => ({
   payload: error
 });
 
-export const registerUserStart = data => ({
+export const registerUserStart = (data, history) => ({
   type: types.REGISTER_USER_START,
-  payload: data
+  payload: data,
+  history
 });
 
 export const registerUserSuccess = () => ({

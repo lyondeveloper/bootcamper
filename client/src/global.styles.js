@@ -17,6 +17,15 @@ const GlobalStyles = createGlobalStyle`
   .section {
     margin-top: 8rem !important;
   }
+
+  .dropdown {
+    color: white;
+    .nav-item {
+      .nav-link {
+        /* color: black !important; */
+      }
+    }
+  }
 `;
 
 export default GlobalStyles;

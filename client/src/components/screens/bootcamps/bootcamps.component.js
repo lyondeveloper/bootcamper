@@ -3,7 +3,7 @@ import React from 'react';
 // Components
 import Sidebar from './sidebar/sidebar.component';
 import Filter from './filter/filter.component';
-import BootcampsOverviewContainer from './bootcamps-overview/bootcamps-overview.container';
+import BootcampsOverview from './bootcamps-overview/bootcamps-overview.component';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -16,7 +16,7 @@ const Bootcamps = () => (
           <Filter />
         </Col>
         <Col md={8}>
-          <BootcampsOverviewContainer />
+          <BootcampsOverview />
         </Col>
       </Row>
     </Container>

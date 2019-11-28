@@ -6,7 +6,7 @@ import { initialState } from './showcase.model';
 
 import FormInput from '../../commons/form/input.component';
 
-import { dynamicFormValidation } from '../../../utils/functions/is-valid';
+import { dynamicFormValidation } from '../../../utils/functions';
 
 import {
   ShowcaseContainer,
@@ -38,7 +38,9 @@ const ShowCase = () => {
   };
 
   return (
-    <ShowcaseContainer imageUrl={''}>
+    <ShowcaseContainer
+      imageUrl={`${process.env.PUBLIC_URL}/static/img/showcase.jpg`}
+    >
       <Container>
         <DarkOverlay>
           <ShowcaseInner>

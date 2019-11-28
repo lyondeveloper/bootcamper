@@ -6,7 +6,7 @@ import { Container, Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
 
 import { initialState } from './reset-password.model';
 
-import { dynamicFormValidation } from '../../../utils/functions/is-valid';
+import { dynamicFormValidation } from '../../../utils/functions';
 
 import { toast } from 'react-toastify';
 

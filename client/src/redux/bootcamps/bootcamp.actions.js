@@ -1,5 +1,9 @@
 import types from './bootcamps.types';
 
+export const setBootcampLoading = () => ({
+  type: types.SET_BOOTCAMP_LOADING
+});
+
 export const getBootcampsStart = () => ({
   type: types.GET_BOOTCAMPS_START
 });
