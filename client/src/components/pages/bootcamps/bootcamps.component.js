@@ -7,7 +7,7 @@ import { getBootcampsStart } from '../../../redux/bootcamps/bootcamp.actions';
 import Spinner from '../../commons/spinner/spinner.component';
 
 const Bootcamps = lazy(() =>
-  import('../../screens/bootcamps/bootcamps.component')
+  import('../../screens/bootcam1ps/bootcamps.component')
 );
 
 const BootcampContainer = lazy(() =>
