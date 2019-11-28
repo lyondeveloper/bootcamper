@@ -23,11 +23,13 @@ export const layout = {
       },
       {
         id: 1,
-        value: "Regular User (Browse, Write reviews, etc)"
+        text: "Regular User (Browse, Write reviews, etc)",
+        value: "user"
       },
       {
         id: 2,
-        value: "Bootcamp Publisher"
+        text: "Bootcamp Publisher",
+        value: "publisher"
       }
     ]
   }
