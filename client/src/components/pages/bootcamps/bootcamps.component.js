@@ -1,17 +1,17 @@
-import React, { Suspense, lazy, useEffect } from 'react';
-import { Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { getBootcampsStart } from '../../../redux/bootcamps/bootcamp.actions';
+import React, { Suspense, lazy, useEffect } from "react";
+import { Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { getBootcampsStart } from "../../../redux/bootcamps/bootcamp.actions";
 
 // Components
-import Spinner from '../../commons/spinner/spinner.component';
+import Spinner from "../../commons/spinner/spinner.component";
 
 const Bootcamps = lazy(() =>
-  import('../../screens/bootcamps/bootcamps.component')
+  import("../../screens/bootcamps/bootcamps.component")
 );
 
-const BootcampContainer = lazy(() =>
-  import('../../screens/bootcamp/bootcamp.container')
+const Bootcamp = lazy(() =>
+  import("../../screens/bootcamp/bootcamp.component")
 );
 
 const BootcampsPage = ({ match, getBootcamps }) => {
@@ -22,7 +22,7 @@ const BootcampsPage = ({ match, getBootcamps }) => {
   return (
     <Suspense fallback={<Spinner />}>
       <Route exact path={`${match.path}`} component={Bootcamps} />
-      <Route exact path={`${match.path}/:id`} component={BootcampContainer} />
+      <Route exact path={`${match.path}/:id`} component={Bootcamp} />
     </Suspense>
   );
 };

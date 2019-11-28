@@ -20,16 +20,15 @@ import { withRouter } from "react-router-dom";
 import { createStructuredSelector } from "reselect";
 import {
   selectSingleBootcamp,
-  selectIsLoadedBootcamp,
   selectLoading
 } from "../../../redux/bootcamps/bootcamp.selectors";
 import { getSingleBootcampStart } from "../../../redux/bootcamps/bootcamp.actions";
 import withSpinner from "../../commons/with-spinner/with-spinner.component";
 
-const Bootcamp = ({ bootcamp, getSingleBootcamp, match, isLoaded }) => {
-  useEffect(() => {
-    getSingleBootcamp(match.params.id);
-  }, ["match.params.id"]);
+const Bootcamp = ({ bootcamp, getSingleBootcamp, match }) => {
+  // useEffect(() => {
+  //   getSingleBootcamp(match.params.id);
+  // }, []);
 
   return (
     <div className="section">
