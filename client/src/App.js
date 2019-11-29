@@ -17,6 +17,9 @@ import Spinner from './components/commons/spinner/spinner.component';
 import ErrorBoundary from './components/commons/error-boundary/error-boundary.component';
 import GlobalStyles from './global.styles';
 
+import { getItemFromLocalStorage } from './utils/functions';
+import moment from 'moment';
+
 // Lazy components
 const Homepage = lazy(() =>
   import('./components/pages/homepage/homepage.component')
@@ -31,8 +34,16 @@ const Account = lazy(() =>
 
 const App = ({ checkUserSession, currentUser }) => {
   // useEffect(() => {
+  //   const {
+  //     tokenInfo: { exp, iat }
+  //   } = currentUser;
+
+  //   // const hasExpired = moment(exp).format('h:mm:ss');
+  //   const user = getItemFromLocalStorage('userSession');
+  //   // debugger;
+
   //   if (Object.keys(currentUser).length > 0) {
-  //     checkUserSession();
+  //     // checkUserSession();
   //   }
   // }, ['currentUser']);
   return (

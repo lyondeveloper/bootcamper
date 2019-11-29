@@ -4,6 +4,11 @@ export const logoutUser = () => ({
   type: types.LOGOUT_USER
 });
 
+export const setCurrentUser = user => ({
+  type: types.LOGOUT_USER,
+  payload: user
+});
+
 export const checkUserSessionStart = () => ({
   type: types.CHECK_USER_SESSION_START
 });

@@ -21,6 +21,8 @@ import { selectCurrentUser } from '../../../redux/users/users.selectors';
 import { logoutUser } from '../../../redux/users/users.actions';
 import { createStructuredSelector } from 'reselect';
 
+import { deleteDataOnLogout } from '../../../utils/functions';
+
 const Header = ({ currentUser, logoutUser }) => {
   const [state, setState] = useState({
     isOpen: false,
@@ -33,6 +35,12 @@ const Header = ({ currentUser, logoutUser }) => {
 
   const toggleDropdown = () =>
     setState({ ...state, isOpenDropdown: !isOpenDropdown });
+
+  const logout = () => {
+    logoutUser();
+
+    deleteDataOnLogout(['userSession', 'jwtToken']);
+  };
 
   return (
     <Navbar className='fixed-top bg-danger' dark expand='md'>
@@ -95,7 +103,7 @@ const Header = ({ currentUser, logoutUser }) => {
 
                     <DropdownItem divider />
 
-                    <DropdownItem onClick={logoutUser}>
+                    <DropdownItem onClick={logout}>
                       <i className='fas fa-sign-out-alt' /> Logout
                     </DropdownItem>
                   </DropdownMenu>

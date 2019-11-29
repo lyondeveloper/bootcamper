@@ -33,5 +33,31 @@ export const setAuthToken = token => {
   }
 };
 
+export const deleteDataOnLogout = arr =>
+  arr.forEach(element => localStorage.removeItem(element));
+
+export const getMultipleItemsFromStorage = arr => {
+  const elementsFromStorage = [];
+  let current = {};
+  arr.forEach(element => {
+    current = localStorage.getItem(element);
+    elementsFromStorage.push(JSON.parse(current));
+  });
+
+  return elementsFromStorage;
+};
+
 // Getting the token from the local storage;
-export const getTokenFromLocalStorage = token => {};
+export const getItemFromLocalStorage = item => {
+  const itemFromStorage = localStorage.getItem(item);
+  const itemParsed = JSON.parse(itemFromStorage);
+  if (itemParsed) return itemParsed;
+};
+
+export const setItemToLocalStorage = item => {};
+
+export const deleteItemToLocalStorage = item => {
+  const itemToRemove = getItemFromLocalStorage(item);
+
+  if (itemToRemove) localStorage.removeItem(item);
+};

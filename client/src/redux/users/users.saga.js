@@ -55,7 +55,8 @@ export function* loginUserExecute({ payload, history }) {
       tokenInfo: { ...tokenDecoded }
     };
 
-    localStorage.setItem('jwtToken', data.token);
+    localStorage.setItem('jwtToken', JSON.stringify(data.token));
+    localStorage.setItem('userSession', JSON.stringify(userData));
     yield put(loginUserSuccess(userData));
     toast.success('Login Successfully');
     history.push('/');
