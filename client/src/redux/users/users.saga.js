@@ -1,38 +1,32 @@
-import { put, takeLatest, all, call } from 'redux-saga/effects';
-import types from './users.types';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import { toast } from 'react-toastify';
-import { setAuthToken } from '../../utils/functions';
+import { put, takeLatest, all, call } from "redux-saga/effects";
+import types from "./users.types";
+import axios from "axios";
+import jwtDecode from "jwt-decode";
+import { toast } from "react-toastify";
+import { setAuthToken, setMultipleItemsToStorage } from "../../utils/functions";
 
 import {
   registerUserSuccess,
   registerUserFailure,
   loginUserFailure,
   loginUserSuccess,
-  checkUserSessionFailure,
-  checkUserSessionSuccess
-} from './users.actions';
+  renovateTokenFailure,
+  renovateTokenSuccess
+} from "./users.actions";
 
-export function* checkUserSessionExecute({ payload }) {
+export function* renovateToken({ payload }) {
   try {
-    const token = localStorage.getItem('jwtToken');
-    debugger;
   } catch (err) {
-    yield put(checkUserSessionFailure(err.message));
+    yield put(renovateTokenFailure(err.message));
   }
-  // debugger;
 }
 
 export function* registerUserExecute({ payload, history }) {
   try {
-    const { data, success } = yield axios.post(
-      '/api/v1/auth/register',
-      payload
-    );
+    yield axios.post("/api/v1/auth/register", payload);
     yield put(registerUserSuccess());
-    toast.success('Register succesfully!');
-    history.push('/auth/login');
+    toast.success("Register succesfully!");
+    history.push("/auth/login");
   } catch (err) {
     yield put(registerUserFailure(err.message));
   }
@@ -40,7 +34,7 @@ export function* registerUserExecute({ payload, history }) {
 
 export function* loginUserExecute({ payload, history }) {
   try {
-    const { data, status } = yield axios.post('/api/v1/auth/login', payload);
+    const { data } = yield axios.post("/api/v1/auth/login", payload);
 
     setAuthToken(data.token);
 
@@ -48,25 +42,29 @@ export function* loginUserExecute({ payload, history }) {
 
     const {
       data: { data: user }
-    } = yield axios.get('/api/v1/auth/me');
+    } = yield axios.get("/api/v1/auth/me");
 
     const userData = {
       ...user,
       tokenInfo: { ...tokenDecoded }
     };
 
-    localStorage.setItem('jwtToken', JSON.stringify(data.token));
-    localStorage.setItem('userSession', JSON.stringify(userData));
+    setMultipleItemsToStorage({
+      jwtToken: JSON.stringify(data.token),
+      userSession: JSON.stringify(userData)
+    });
+
     yield put(loginUserSuccess(userData));
-    toast.success('Login Successfully');
-    history.push('/');
+
+    toast.success("Login Successfully");
+    history.push("/");
   } catch (err) {
     yield put(loginUserFailure(err.message));
   }
 }
 
-export function* checkUserSessionListener() {
-  yield takeLatest(types.CHECK_USER_SESSION_START, checkUserSessionExecute);
+export function* renovateTokenListener() {
+  yield takeLatest(types.RENOVATE_TOKEN_START, renovateToken);
 }
 
 export function* registerUserListener() {
@@ -81,6 +79,6 @@ export default function* userSaga() {
   yield all([
     call(loginUserListener),
     call(registerUserListener),
-    call(checkUserSessionListener)
+    call(renovateTokenListener)
   ]);
 }

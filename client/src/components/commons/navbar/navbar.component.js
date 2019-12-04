@@ -74,7 +74,7 @@ const Header = ({ currentUser, logoutUser }) => {
                       <NavLink
                         tag={Link}
                         className='text-dark'
-                        to='/account/manage-bootcamps'
+                        to='/account'
                       >
                         <i className='fas fa-user'></i> Account
                       </NavLink>

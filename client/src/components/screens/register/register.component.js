@@ -1,14 +1,14 @@
-import React, { useState, useMemo } from 'react';
-import { Row, Col, Button, CardBody, Container, Form, Card } from 'reactstrap';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useMemo } from "react";
+import { Row, Col, Button, CardBody, Container, Form, Card } from "reactstrap";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { withRouter } from "react-router-dom";
 
-import { registerUserStart } from '../../../redux/users/users.actions';
+import { registerUserStart } from "../../../redux/users/users.actions";
 
-import { initialState, layout } from './register.model';
-import FormInput from '../../commons/form/input.component';
-import { dynamicFormValidation } from '../../../utils/functions';
+import { initialState, layout } from "./register.model";
+import FormInput from "../../commons/form/input.component";
+import { dynamicFormValidation } from "../../../utils/functions";
 
 const Register = ({ registerUser, history }) => {
   const [state, setState] = useState({ ...initialState });
@@ -41,22 +41,21 @@ const Register = ({ registerUser, history }) => {
         password,
         role: layout.selectOption.values[roleIndex].value
       };
-      debugger;
 
       registerUser(data, history);
     }
   };
 
   return (
-    <section className='form mt-5'>
+    <section className="form mt-5">
       <Container>
         <Row>
-          <Col md={6} className='m-auto'>
-            <Card color='white' className='p-4 mb-4'>
+          <Col md={6} className="m-auto">
+            <Card color="white" className="p-4 mb-4">
               <CardBody>
                 <h1>
-                  {' '}
-                  <i class='fas fa-sign-in-alt'></i> Register
+                  {" "}
+                  <i class="fas fa-sign-in-alt"></i> Register
                 </h1>
                 <p>
                   Register to list your bootcamp or rate, review and favorite
@@ -64,62 +63,62 @@ const Register = ({ registerUser, history }) => {
                 </p>
                 <Form>
                   <FormInput
-                    name='name'
+                    name="name"
                     value={name}
-                    labelText='Name'
+                    labelText="Name"
                     required
-                    placeholder='Enter full name'
+                    placeholder="Enter full name"
                     onChange={handleChange}
-                    inputType='labelText'
+                    inputType="labelText"
                     isValid={validationRules.name}
                   />
                   <FormInput
-                    name='email'
+                    name="email"
                     value={email}
-                    labelText='Email'
+                    labelText="Email"
                     required
-                    inputType='labelText'
-                    placeholder='Enter Email'
+                    inputType="labelText"
+                    placeholder="Enter Email"
                     onChange={handleChange}
                     isValid={validationRules.email}
                   />
                   <FormInput
-                    name='password'
+                    name="password"
                     value={password}
-                    inputType='labelText'
-                    labelText='Password'
-                    type='password'
+                    inputType="labelText"
+                    labelText="Password"
+                    type="password"
                     required
-                    placeholder='Enter Password'
+                    placeholder="Enter Password"
                     onChange={handleChange}
                     isValid={validationRules.password}
                   />
 
                   <FormInput
-                    name='confirmPassword'
+                    name="confirmPassword"
                     value={confirmPassword}
-                    labelText='Confirm Password'
-                    type='password'
+                    labelText="Confirm Password"
+                    type="password"
                     required
-                    placeholder='Confirm Password'
-                    inputType='labelText'
+                    placeholder="Confirm Password"
+                    inputType="labelText"
                     onChange={handleChange}
                     isValid={validationRules.confirmPassword}
                   />
                   <FormInput
-                    name='role'
-                    id='role'
-                    inputType='select'
+                    name="role"
+                    id="role"
+                    inputType="select"
                     onChange={handleChange}
                     options={layout.selectOption.values}
-                    type='select'
-                    labelText='User Role'
-                    errorText='* You must be affiliated with the bootcamp in some way in
-                    order to add it to DevCamper.'
+                    type="select"
+                    labelText="User Role"
+                    errorText="* You must be affiliated with the bootcamp in some way in
+                    order to add it to DevCamper."
                   />
                   <Button
-                    color='primary'
-                    className='btn-block'
+                    color="primary"
+                    className="btn-block"
                     onClick={handleSubmit}
                   >
                     Login

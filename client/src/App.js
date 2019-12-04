@@ -1,51 +1,72 @@
-import React, { Fragment, Suspense, lazy, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { createStructuredSelector } from 'reselect';
+import React, { Fragment, Suspense, lazy, useEffect } from "react";
+import { connect } from "react-redux";
+import { Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { createStructuredSelector } from "reselect";
 
 // Authentication redux stuff
-import { checkUserSessionStart } from './redux/users/users.actions';
+import { renovateTokenStart } from "./redux/users/users.actions";
 import {
   selectUserTokenInformation,
   selectCurrentUser
-} from './redux/users/users.selectors';
+} from "./redux/users/users.selectors";
 
 // Components
-import Header from './components/commons/navbar/navbar.component';
-import Spinner from './components/commons/spinner/spinner.component';
-import ErrorBoundary from './components/commons/error-boundary/error-boundary.component';
-import GlobalStyles from './global.styles';
+import Header from "./components/commons/navbar/navbar.component";
+import Spinner from "./components/commons/spinner/spinner.component";
+import ErrorBoundary from "./components/commons/error-boundary/error-boundary.component";
+import GlobalStyles from "./global.styles";
 
-import { getItemFromLocalStorage } from './utils/functions';
-import moment from 'moment';
+import { getItemFromLocalStorage } from "./utils/functions";
+import moment from "moment";
 
 // Lazy components
 const Homepage = lazy(() =>
-  import('./components/pages/homepage/homepage.component')
+  import("./components/pages/homepage/homepage.component")
 );
-const Auth = lazy(() => import('./components/pages/auth/auth.component'));
+const Auth = lazy(() => import("./components/pages/auth/auth.component"));
 const Bootcamps = lazy(() =>
-  import('./components/pages/bootcamps/bootcamps.component')
+  import("./components/pages/bootcamps/bootcamps.component")
 );
 const Account = lazy(() =>
-  import('./components/pages/account/account.component')
+  import("./components/pages/account/account.component")
 );
 
-const App = ({ checkUserSession, currentUser }) => {
+const App = ({ currentUser }) => {
   // useEffect(() => {
-  //   const {
-  //     tokenInfo: { exp, iat }
-  //   } = currentUser;
-
-  //   // const hasExpired = moment(exp).format('h:mm:ss');
-  //   const user = getItemFromLocalStorage('userSession');
-  //   // debugger;
-
   //   if (Object.keys(currentUser).length > 0) {
-  //     // checkUserSession();
+  //     const {
+  //       tokenInfo: { exp, iat }
+  //     } = currentUser;
+
+  //     const tokenSubstracted = exp - 1577672273;
+
+  //     const currentTime = Date.now() / 1000;
+
+  //     const hasExpired = exp < currentTime;
+
+  //     const user = getItemFromLocalStorage("userSession");
   //   }
-  // }, ['currentUser']);
+  // }, ["currentUser"]);
+
+  // let hasChanged = false;
+  // const obvervationArray = [];
+
+  // setInterval(() => {}, 1000);
+
+  // const mutationObserver = new MutationObserver(mutations => {
+  //   mutations.forEach(mutation => obvervationArray.push(mutation));
+  // });
+
+  // mutationObserver.observe(document.documentElement, {
+  //   attributes: true,
+  //   characterData: true,
+  //   childList: true,
+  //   subtree: true,
+  //   attributeOldValue: true,
+  //   characterDataOldValue: true
+  // });
+
   return (
     <Fragment>
       <GlobalStyles />
@@ -54,10 +75,10 @@ const App = ({ checkUserSession, currentUser }) => {
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
           <Switch>
-            <Route exact path='/' component={Homepage} />
-            <Route path='/auth' component={Auth} />
-            <Route path='/bootcamps' component={Bootcamps} />
-            <Route path='/account' component={Account} />
+            <Route exact path="/" component={Homepage} />
+            <Route path="/auth" component={Auth} />
+            <Route path="/bootcamps" component={Bootcamps} />
+            <Route path="/account" component={Account} />
           </Switch>
         </Suspense>
       </ErrorBoundary>
@@ -71,7 +92,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  checkUserSession: () => dispatch(checkUserSessionStart())
+  renovateToken: () => dispatch(renovateTokenStart())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

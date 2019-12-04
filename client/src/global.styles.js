@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
   img {
@@ -15,6 +15,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   .section {
+    margin: 40px;
     margin-top: 8rem !important;
   }
 

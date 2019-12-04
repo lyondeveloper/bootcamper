@@ -1,15 +1,15 @@
-import { takeLatest, put, call, all } from 'redux-saga/effects';
+import { takeLatest, put, call, all } from "redux-saga/effects";
 
-import axios from 'axios';
+import axios from "axios";
 
-import types from './bootcamps.types';
+import types from "./bootcamps.types";
 
 import {
   getBootcampsFailure,
   getBootcampsSuccess,
   getSingleBootcampFailure,
   getSingleBootcampSuccess
-} from './bootcamp.actions';
+} from "./bootcamp.actions";
 
 export function* fetchSingleBootcampExecute({ payload: id }) {
   try {
@@ -32,7 +32,9 @@ export function* fetchSingleBootcampExecute({ payload: id }) {
 
 export function* fetchBootcampsExecute() {
   try {
-    const { data, status } = yield axios.get('/api/v1/bootcamps');
+    const { data } = yield axios.get("/api/v1/bootcamps");
+
+    debugger;
 
     yield put(getBootcampsSuccess(data.data));
   } catch (err) {

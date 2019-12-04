@@ -1,4 +1,4 @@
-import types from './users.types';
+import types from "./users.types";
 
 export const logoutUser = () => ({
   type: types.LOGOUT_USER
@@ -9,16 +9,16 @@ export const setCurrentUser = user => ({
   payload: user
 });
 
-export const checkUserSessionStart = () => ({
+export const renovateTokenStart = () => ({
   type: types.CHECK_USER_SESSION_START
 });
 
-export const checkUserSessionSuccess = user => ({
+export const renovateTokenSuccess = user => ({
   type: types.CHECK_USER_SESSION_SUCCESS,
   payload: user
 });
 
-export const checkUserSessionFailure = err => ({
+export const renovateTokenFailure = err => ({
   type: types.CHECK_USER_SESSION_FAILURE,
   payload: err
 });
