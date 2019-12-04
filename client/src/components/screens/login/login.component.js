@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import {createStructuredSelector} from 'reselect'
 import { toast } from 'react-toastify';
 import {
   Form,
@@ -13,18 +14,30 @@ import {
   Button
 } from 'reactstrap';
 
+import {selectError} from '../../../redux/users/users.selectors'
+
 import FormInput from '../../commons/form/input.component';
 import { initialState } from './login.model';
 import { dynamicFormValidation } from '../../../utils/functions';
 
-import { loginUserStart } from '../../../redux/users/users.actions';
+import { loginUserStart, cleanUser } from '../../../redux/users/users.actions';
 
-const Login = ({ match, loginUser, history }) => {
+const Login = ({ match, loginUser, history, error, cleanUser }) => {
   const [state, setState] = useState({ ...initialState });
 
   const { formPayload, validationRules } = state;
 
   const { email, password } = formPayload;
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`${error}, please try again`);
+    }
+
+    return () => {
+      cleanUser();
+    };
+  }, [error]);
 
   const handleChange = ({ target: { name, value } }) =>
     setState({ ...state, formPayload: { ...formPayload, [name]: value } });
@@ -39,7 +52,6 @@ const Login = ({ match, loginUser, history }) => {
 
   const handleSubmit = () => {
     if (isValid()) {
-      //do stuff with API
 
       const data = {
         email,
@@ -108,8 +120,13 @@ const Login = ({ match, loginUser, history }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  loginUser: (data, history) => dispatch(loginUserStart(data, history))
+const mapStateToProps = createStructuredSelector({
+  error: selectError
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Login));
+const mapDispatchToProps = dispatch => ({
+  loginUser: (data, history) => dispatch(loginUserStart(data, history)),
+  cleanUser: () => dispatch(cleanUser())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

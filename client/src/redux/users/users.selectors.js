@@ -11,3 +11,8 @@ export const selectUserTokenInformation = createSelector(
   [selectCurrentUser],
   user => user.tokenInfo
 );
+
+export const selectError = createSelector(
+  [selectUserState],
+  user => user.error
+);

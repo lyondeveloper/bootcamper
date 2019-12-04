@@ -1,5 +1,5 @@
 import { put, takeLatest, all, call } from "redux-saga/effects";
-import types from "./users.types";
+import {apiTypes, localTypes} from "./users.types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
@@ -59,20 +59,20 @@ export function* loginUserExecute({ payload, history }) {
     toast.success("Login Successfully");
     history.push("/");
   } catch (err) {
-    yield put(loginUserFailure(err.message));
+    yield put(loginUserFailure(err.response.data.error));
   }
 }
 
 export function* renovateTokenListener() {
-  yield takeLatest(types.RENOVATE_TOKEN_START, renovateToken);
+  yield takeLatest(apiTypes.RENOVATE_TOKEN_START, renovateToken);
 }
 
 export function* registerUserListener() {
-  yield takeLatest(types.REGISTER_USER_START, registerUserExecute);
+  yield takeLatest(apiTypes.REGISTER_USER_START, registerUserExecute);
 }
 
 export function* loginUserListener() {
-  yield takeLatest(types.LOGIN_USER_START, loginUserExecute);
+  yield takeLatest(apiTypes.LOGIN_USER_START, loginUserExecute);
 }
 
 export default function* userSaga() {

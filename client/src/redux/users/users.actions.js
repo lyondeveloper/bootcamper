@@ -1,55 +1,61 @@
-import types from "./users.types";
+import {apiTypes, localTypes} from "./users.types";
+
+// State Calls
+export const cleanUser = () => ({
+  type: localTypes.CLEAN_USER_STATE
+})
 
 export const logoutUser = () => ({
-  type: types.LOGOUT_USER
+  type: localTypes.LOGOUT_USER
 });
 
 export const setCurrentUser = user => ({
-  type: types.LOGOUT_USER,
+  type: localTypes.SET_CURRENT_USER,
   payload: user
 });
 
+// API Calls
 export const renovateTokenStart = () => ({
-  type: types.CHECK_USER_SESSION_START
+  type: apiTypes.CHECK_USER_SESSION_START
 });
 
 export const renovateTokenSuccess = user => ({
-  type: types.CHECK_USER_SESSION_SUCCESS,
+  type: apiTypes.CHECK_USER_SESSION_SUCCESS,
   payload: user
 });
 
 export const renovateTokenFailure = err => ({
-  type: types.CHECK_USER_SESSION_FAILURE,
+  type: apiTypes.CHECK_USER_SESSION_FAILURE,
   payload: err
 });
 
 export const loginUserStart = (data, history) => ({
-  type: types.LOGIN_USER_START,
+  type: apiTypes.LOGIN_USER_START,
   payload: data,
   history
 });
 
 export const loginUserSuccess = user => ({
-  type: types.LOGIN_USER_SUCCESS,
+  type: apiTypes.LOGIN_USER_SUCCESS,
   payload: user
 });
 
 export const loginUserFailure = error => ({
-  type: types.LOGIN_USER_FAILURE,
+  type: apiTypes.LOGIN_USER_FAILURE,
   payload: error
 });
 
 export const registerUserStart = (data, history) => ({
-  type: types.REGISTER_USER_START,
+  type: apiTypes.REGISTER_USER_START,
   payload: data,
   history
 });
 
 export const registerUserSuccess = () => ({
-  type: types.REGISTER_USER_SUCCESS
+  type: apiTypes.REGISTER_USER_SUCCESS
 });
 
 export const registerUserFailure = error => ({
-  type: types.REGISTER_USER_FAILURE,
+  type: apiTypes.REGISTER_USER_FAILURE,
   payload: error
 });
