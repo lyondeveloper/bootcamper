@@ -1,8 +1,10 @@
 import {apiTypes, localTypes} from "./users.types";
 
 // State Calls
-export const cleanUser = () => ({
-  type: localTypes.CLEAN_USER_STATE
+export const cleanUser = (property, value) => ({
+  type: localTypes.CLEAN_USER_STATE,
+  property,
+  value
 })
 
 export const logoutUser = () => ({
@@ -57,5 +59,20 @@ export const registerUserSuccess = () => ({
 
 export const registerUserFailure = error => ({
   type: apiTypes.REGISTER_USER_FAILURE,
+  payload: error
+});
+
+export const updateUserStart = (data, history) => ({
+  type: apiTypes.UPDATE_USER_START,
+  payload: data,
+  history
+});
+
+export const updateUserSuccess = () => ({
+  type: apiTypes.UPDATE_USER_SUCCESS,
+});
+
+export const updateUserFailure = error => ({
+  type: apiTypes.UPDATE_USER_FAILURE,
   payload: error
 });

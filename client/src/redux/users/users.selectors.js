@@ -7,6 +7,11 @@ export const selectCurrentUser = createSelector(
   user => user.currentUser
 );
 
+export const selectLoading = createSelector(
+  [selectUserState],
+  user => user.loading
+);
+
 export const selectUserTokenInformation = createSelector(
   [selectCurrentUser],
   user => user.tokenInfo

@@ -85,9 +85,9 @@ const Header = ({ currentUser, logoutUser }) => {
                       <NavLink
                         tag={Link}
                         className='text-dark'
-                        to='/account/manage-reviews'
+                        to='/account/manage-bootcamp'
                       >
-                        Manage Bootcamps
+                        Manage Bootcamp
                       </NavLink>
                     </DropdownItem>
 
@@ -95,7 +95,7 @@ const Header = ({ currentUser, logoutUser }) => {
                       <NavLink
                         tag={Link}
                         className='text-dark'
-                        to='/account/manage-bootcamps'
+                        to='/account/manage-reviews'
                       >
                         Manage Reviews
                       </NavLink>

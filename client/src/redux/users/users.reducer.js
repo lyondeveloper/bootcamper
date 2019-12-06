@@ -1,4 +1,4 @@
-import {apiTypes, localTypes} from './users.types';
+import { apiTypes, localTypes } from './users.types';
 
 const initialState = {
   currentUser: {},
@@ -9,14 +9,15 @@ const initialState = {
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
-
     case localTypes.CLEAN_USER_STATE:
-      return {
+      const { property, value } = action;
+
+      const newState = {
         ...state,
-        currentUser: {},
-        loading: false,
-        error: null,
-        isAuthenticated: false
+        [property]: value
+      }
+      return {
+        ...newState
       };
 
     case localTypes.SET_CURRENT_USER:
@@ -33,6 +34,7 @@ export default function usersReducer(state = initialState, action) {
         isAuthenticated: false
       };
 
+    case apiTypes.UPDATE_USER_START:
     case apiTypes.REGISTER_USER_START:
     case apiTypes.LOGIN_USER_START:
       return {
@@ -54,7 +56,16 @@ export default function usersReducer(state = initialState, action) {
         loading: false
       };
 
-    // case apiTypes.REGISTER_USER_FAILURE:
+    case apiTypes.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+        currentUser: {},
+        loading: false
+      };
+
+    case apiTypes.UPDATE_USER_FAILURE:
+    case apiTypes.REGISTER_USER_FAILURE:
     case apiTypes.LOGIN_USER_FAILURE:
       return {
         ...state,
