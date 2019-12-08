@@ -1,5 +1,5 @@
 import { put, takeLatest, all, call } from "redux-saga/effects";
-import types from "./users.types";
+import { apiTypes, localTypes } from "./users.types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
@@ -11,7 +11,10 @@ import {
   loginUserFailure,
   loginUserSuccess,
   renovateTokenFailure,
-  renovateTokenSuccess
+  renovateTokenSuccess,
+  updateUserFailure,
+  updateUserSuccess,
+  logoutUser
 } from "./users.actions";
 
 export function* renovateToken({ payload }) {
@@ -59,26 +62,43 @@ export function* loginUserExecute({ payload, history }) {
     toast.success("Login Successfully");
     history.push("/");
   } catch (err) {
-    yield put(loginUserFailure(err.message));
+    yield put(loginUserFailure(err.response.data.error));
   }
 }
 
+export function* updateUserExecute({ payload, history }) {
+  try {
+    yield axios.put('/api/v1/auth/updatedetails', payload);
+    yield put(updateUserSuccess());
+    yield put(logoutUser());
+
+  } catch(err) {
+    yield put(updateUserFailure(err));
+  }
+}
+
+
 export function* renovateTokenListener() {
-  yield takeLatest(types.RENOVATE_TOKEN_START, renovateToken);
+  yield takeLatest(apiTypes.RENOVATE_TOKEN_START, renovateToken);
 }
 
 export function* registerUserListener() {
-  yield takeLatest(types.REGISTER_USER_START, registerUserExecute);
+  yield takeLatest(apiTypes.REGISTER_USER_START, registerUserExecute);
 }
 
 export function* loginUserListener() {
-  yield takeLatest(types.LOGIN_USER_START, loginUserExecute);
+  yield takeLatest(apiTypes.LOGIN_USER_START, loginUserExecute);
+}
+
+export function* updateUserListener() {
+  yield takeLatest(apiTypes.UPDATE_USER_START, updateUserExecute);
 }
 
 export default function* userSaga() {
   yield all([
     call(loginUserListener),
     call(registerUserListener),
-    call(renovateTokenListener)
+    call(renovateTokenListener),
+    call(updateUserListener)
   ]);
 }

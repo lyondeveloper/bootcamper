@@ -1,4 +1,4 @@
-import types from './users.types';
+import { apiTypes, localTypes } from './users.types';
 
 const initialState = {
   currentUser: {},
@@ -9,34 +9,46 @@ const initialState = {
 
 export default function usersReducer(state = initialState, action) {
   switch (action.type) {
-    case types.SET_CURRENT_USER:
+    case localTypes.CLEAN_USER_STATE:
+      const { property, value } = action;
+
+      const newState = {
+        ...state,
+        [property]: value
+      }
+      return {
+        ...newState
+      };
+
+    case localTypes.SET_CURRENT_USER:
       return {
         ...state,
         currentUser: action.payload,
         isAuthenticated: true
       };
 
-    case types.LOGOUT_USER:
+    case localTypes.LOGOUT_USER:
       return {
         ...state,
         currentUser: {},
         isAuthenticated: false
       };
 
-    case types.REGISTER_USER_START:
-    case types.LOGIN_USER_START:
+    case apiTypes.UPDATE_USER_START:
+    case apiTypes.REGISTER_USER_START:
+    case apiTypes.LOGIN_USER_START:
       return {
         ...state,
         loading: true
       };
 
-    case types.REGISTER_USER_SUCCESS:
+    case apiTypes.REGISTER_USER_SUCCESS:
       return {
         ...state,
         loading: false
       };
 
-    case types.LOGIN_USER_SUCCESS:
+    case apiTypes.LOGIN_USER_SUCCESS:
       return {
         ...state,
         isAuthenticated: Object.keys(action.payload).length > 0,
@@ -44,11 +56,21 @@ export default function usersReducer(state = initialState, action) {
         loading: false
       };
 
-    case types.REGISTER_USER_FAILURE:
-    case types.LOGIN_USER_FAILURE:
+    case apiTypes.UPDATE_USER_SUCCESS:
       return {
         ...state,
-        error: action.payload
+        isAuthenticated: false,
+        currentUser: {},
+        loading: false
+      };
+
+    case apiTypes.UPDATE_USER_FAILURE:
+    case apiTypes.REGISTER_USER_FAILURE:
+    case apiTypes.LOGIN_USER_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false
       };
     default:
       return state;

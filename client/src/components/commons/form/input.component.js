@@ -98,6 +98,23 @@ const FormInput = ({
 
       break;
 
+    case "file":
+      inputContent = (
+        <Fragment>
+          <Label for={name}> {labelText} </Label>
+          <Input
+            type={type}
+            name={name}
+            id={id}
+            onChange={onChange}
+            onBlur={onBlur}
+            invalid={required && !isValid}
+          />
+        </Fragment>
+      );
+
+      break;
+
     default:
       break;
   }

@@ -74,32 +74,32 @@ const Header = ({ currentUser, logoutUser }) => {
                       <NavLink
                         tag={Link}
                         className='text-dark'
-                        to='/account'
+                        to='/account/manage-account'
                       >
-                        <i className='fas fa-user'></i> Account
+                        <i className='fas fa-user'></i> Manage Account
                       </NavLink>
                     </DropdownItem>
 
-                    {/* <DropdownItem divider />
+                    <DropdownItem divider />
+                    <DropdownItem>
+                      <NavLink
+                        tag={Link}
+                        className='text-dark'
+                        to='/account/manage-bootcamp'
+                      >
+                        Manage Bootcamp
+                      </NavLink>
+                    </DropdownItem>
+
                     <DropdownItem>
                       <NavLink
                         tag={Link}
                         className='text-dark'
                         to='/account/manage-reviews'
                       >
-                        Manage Bootcamps
-                      </NavLink>
-                    </DropdownItem>
-
-                    <DropdownItem>
-                      <NavLink
-                        tag={Link}
-                        className='text-dark'
-                        to='/account/manage-bootcamps'
-                      >
                         Manage Reviews
                       </NavLink>
-                    </DropdownItem> */}
+                    </DropdownItem>
 
                     <DropdownItem divider />
 

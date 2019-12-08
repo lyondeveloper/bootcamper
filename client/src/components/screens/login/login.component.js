@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect'
 import { toast } from 'react-toastify';
 import {
   Form,
@@ -14,17 +15,29 @@ import {
 } from 'reactstrap';
 
 import FormInput from '../../commons/form/input.component';
+import Spinner from '../../commons/spinner/spinner.component'
+
+import { selectError, selectLoading } from '../../../redux/users/users.selectors'
 import { initialState } from './login.model';
 import { dynamicFormValidation } from '../../../utils/functions';
+import { loginUserStart, cleanUser } from '../../../redux/users/users.actions';
 
-import { loginUserStart } from '../../../redux/users/users.actions';
-
-const Login = ({ match, loginUser, history }) => {
+const Login = ({ match, loginUser, history, error, cleanUser, loading }) => {
   const [state, setState] = useState({ ...initialState });
 
   const { formPayload, validationRules } = state;
 
   const { email, password } = formPayload;
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`${error}, please try again`);
+    }
+
+    return () => {
+      cleanUser('error', '');
+    };
+  }, [error, cleanUser]);
 
   const handleChange = ({ target: { name, value } }) =>
     setState({ ...state, formPayload: { ...formPayload, [name]: value } });
@@ -39,7 +52,6 @@ const Login = ({ match, loginUser, history }) => {
 
   const handleSubmit = () => {
     if (isValid()) {
-      //do stuff with API
 
       const data = {
         email,
@@ -50,8 +62,13 @@ const Login = ({ match, loginUser, history }) => {
     }
   };
 
-  return (
-    <Container className='mt-5'>
+  let loginContent;
+
+  if (loading) {
+    loginContent = <Spinner />
+  } else {
+    loginContent = (
+      <Container className='mt-5'>
       <Row>
         <Col md={6} className='m-auto'>
           <Card color='white' className='p-4 mb-4'>
@@ -105,11 +122,20 @@ const Login = ({ match, loginUser, history }) => {
         </Col>
       </Row>
     </Container>
-  );
+    )
+  }
+
+  return loginContent;
 };
 
-const mapDispatchToProps = dispatch => ({
-  loginUser: (data, history) => dispatch(loginUserStart(data, history))
+const mapStateToProps = createStructuredSelector({
+  error: selectError,
+  loading: selectLoading
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Login));
+const mapDispatchToProps = dispatch => ({
+  loginUser: (data, history) => dispatch(loginUserStart(data, history)),
+  cleanUser: (property, value) => dispatch(cleanUser(property, value))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
