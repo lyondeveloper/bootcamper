@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Card, CardBody, CardTitle, CardText, Button, CardImg, Form, FormGroup } from 'reactstrap';
-import FormInput from '../../commons/form/input.component'
+import FormInput from '../../commons/form/input.component';
 
 const ManageBootcamp = () => {
   const [file, setFile] = useState('');

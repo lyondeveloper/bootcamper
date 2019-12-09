@@ -59,8 +59,6 @@ export default function usersReducer(state = initialState, action) {
     case apiTypes.UPDATE_USER_SUCCESS:
       return {
         ...state,
-        isAuthenticated: false,
-        currentUser: {},
         loading: false
       };
 
