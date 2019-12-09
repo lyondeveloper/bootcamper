@@ -76,3 +76,18 @@ export const updateUserFailure = error => ({
   type: apiTypes.UPDATE_USER_FAILURE,
   payload: error
 });
+
+export const forgotPasswordStart = (payload, history) => ({
+  type: apiTypes.FORGOT_PASSWORD_START,
+  payload,
+  history
+});
+
+export const forgotPasswordSuccess = () => ({
+  type: apiTypes.FORGOT_PASSWORD_SUCCESS
+});
+
+export const forgotPasswordFailure = (err) => ({
+  type: apiTypes.FORGOT_PASSWORD_FAILURE,
+  payload: err
+});

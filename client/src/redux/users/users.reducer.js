@@ -37,9 +37,20 @@ export default function usersReducer(state = initialState, action) {
     case apiTypes.UPDATE_USER_START:
     case apiTypes.REGISTER_USER_START:
     case apiTypes.LOGIN_USER_START:
+    case apiTypes.FORGOT_PASSWORD_START:
       return {
         ...state,
         loading: true
+      };
+
+    case apiTypes.UPDATE_USER_FAILURE:
+    case apiTypes.REGISTER_USER_FAILURE:
+    case apiTypes.LOGIN_USER_FAILURE:
+    case apiTypes.FORGOT_PASSWORD_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false
       };
 
     case apiTypes.REGISTER_USER_SUCCESS:
@@ -62,14 +73,12 @@ export default function usersReducer(state = initialState, action) {
         loading: false
       };
 
-    case apiTypes.UPDATE_USER_FAILURE:
-    case apiTypes.REGISTER_USER_FAILURE:
-    case apiTypes.LOGIN_USER_FAILURE:
+    case apiTypes.FORGOT_PASSWORD_SUCCESS:
       return {
         ...state,
-        error: action.payload,
         loading: false
-      };
+      }
+
     default:
       return state;
   }

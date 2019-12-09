@@ -105,7 +105,7 @@ const Login = ({ match, loginUser, history, error, cleanUser, loading }) => {
                 />
                 <FormGroup>
                   <Button
-                    color='primary'
+                    color='success'
                     className='btn-block'
                     onClick={handleSubmit}
                   >
@@ -115,7 +115,7 @@ const Login = ({ match, loginUser, history, error, cleanUser, loading }) => {
               </Form>
               <p className='pt-4'>
                 Forgot Password?{' '}
-                <Link to='/auth/reset-password'> Reset Password </Link>{' '}
+                <Link to='/auth/reset-password' className='btn btn-warning'> Reset Password </Link>{' '}
               </p>
             </CardBody>
           </Card>

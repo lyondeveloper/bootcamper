@@ -14,7 +14,9 @@ import {
   renovateTokenSuccess,
   updateUserFailure,
   updateUserSuccess,
-  logoutUser
+  logoutUser,
+  forgotPasswordFailure,
+  forgotPasswordSuccess
 } from "./users.actions";
 
 export function* renovateToken({ payload }) {
@@ -77,6 +79,16 @@ export function* updateUserExecute({ payload, history }) {
   }
 }
 
+export function* forgotPassword({ payload }) {
+  try {
+    const response = yield axios.post('/api/v1/auth/forgotpassword', payload);
+
+    yield put(forgotPasswordSuccess());
+
+  } catch(err) {
+    yield put(forgotPasswordFailure(err.response.data.error));
+  }
+}
 
 export function* renovateTokenListener() {
   yield takeLatest(apiTypes.RENOVATE_TOKEN_START, renovateToken);
@@ -94,11 +106,16 @@ export function* updateUserListener() {
   yield takeLatest(apiTypes.UPDATE_USER_START, updateUserExecute);
 }
 
+export function* forgotPasswordListener() {
+  yield takeLatest(apiTypes.FORGOT_PASSWORD_START, forgotPassword);
+}
+
 export default function* userSaga() {
   yield all([
     call(loginUserListener),
     call(registerUserListener),
     call(renovateTokenListener),
-    call(updateUserListener)
+    call(updateUserListener),
+    call(forgotPasswordListener)
   ]);
 }
