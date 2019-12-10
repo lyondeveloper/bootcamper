@@ -115,7 +115,7 @@ const Login = ({ match, loginUser, history, error, cleanUser, loading }) => {
               </Form>
               <p className='pt-4'>
                 Forgot Password?{' '}
-                <Link to='/auth/reset-password' className='btn btn-warning'> Reset Password </Link>{' '}
+                <Link to='/auth/reset-password' className='btn btn-secondary'> Reset Password </Link>{' '}
               </p>
             </CardBody>
           </Card>
@@ -138,4 +138,4 @@ const mapDispatchToProps = dispatch => ({
   cleanUser: (property, value) => dispatch(cleanUser(property, value))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

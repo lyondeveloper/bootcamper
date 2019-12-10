@@ -5,6 +5,7 @@ import FormInput from '../../commons/form/input.component';
 
 const ManageBootcamp = () => {
   const [file, setFile] = useState('');
+
   return (
     <Container className='section'>
       <Row>

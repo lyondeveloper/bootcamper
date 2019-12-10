@@ -5,10 +5,6 @@ export const cleanUser = (property, value) => ({
   type: localTypes.CLEAN_USER_STATE,
   property,
   value
-})
-
-export const logoutUser = () => ({
-  type: localTypes.LOGOUT_USER
 });
 
 export const setCurrentUser = user => ({
@@ -47,6 +43,20 @@ export const loginUserFailure = error => ({
   payload: error
 });
 
+export const logoutUserStart = (history) => ({
+  type: apiTypes.LOGOUT_USER_START,
+  history
+});
+
+export const logoutUserSuccess = () => ({
+  type: apiTypes.LOGOUT_USER_SUCCESS,
+});
+
+export const logoutUserFailure = error => ({
+  type: apiTypes.LOGOUT_USER_FAILURE,
+  payload: error
+});
+
 export const registerUserStart = (data, history) => ({
   type: apiTypes.REGISTER_USER_START,
   payload: data,
@@ -74,6 +84,21 @@ export const updateUserSuccess = () => ({
 
 export const updateUserFailure = error => ({
   type: apiTypes.UPDATE_USER_FAILURE,
+  payload: error
+});
+
+export const updatePasswordStart = (data, history) => ({
+  type: apiTypes.UPDATE_PASSWORD_START,
+  payload: data,
+  history
+});
+
+export const updatePasswordSuccess = () => ({
+  type: apiTypes.UPDATE_PASSWORD_SUCCESS,
+});
+
+export const updatePasswordFailure = error => ({
+  type: apiTypes.UPDATE_PASSWORD_FAILURE,
   payload: error
 });
 
