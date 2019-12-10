@@ -101,7 +101,6 @@ export function* updatePassword({ payload }) {
     yield axios.put('/api/v1/auth/updatepassword', payload);
     yield put(updatePasswordSuccess());
     yield put(logoutUser());
-    debugger
 
   } catch(err) {
     yield put(updatePasswordFailure(err.response.data.error))
@@ -110,7 +109,7 @@ export function* updatePassword({ payload }) {
 
 export function* forgotPassword({ payload }) {
   try {
-    const response = yield axios.post('/api/v1/auth/forgotpassword', payload);
+    yield axios.post('/api/v1/auth/forgotpassword', payload);
 
     yield put(forgotPasswordSuccess());
 

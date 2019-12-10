@@ -90,7 +90,7 @@ const FormInput = ({
           >
             {options.length > 0 &&
               options.map(option => (
-                <option key={option.id}> {option.text} </option>
+                <option key={option.id}> {option.text || option.value} </option>
               ))}
           </Input>
         </Fragment>

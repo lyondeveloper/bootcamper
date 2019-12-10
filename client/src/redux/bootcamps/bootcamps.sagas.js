@@ -34,8 +34,6 @@ export function* fetchBootcampsExecute() {
   try {
     const { data } = yield axios.get("/api/v1/bootcamps");
 
-    debugger;
-
     yield put(getBootcampsSuccess(data.data));
   } catch (err) {
     yield put(getBootcampsFailure(err));
