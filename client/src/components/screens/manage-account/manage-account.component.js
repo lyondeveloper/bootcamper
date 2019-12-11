@@ -1,129 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
+import React, { Suspense, lazy } from 'react';
+import { Route } from 'react-router-dom';
 
-import { Card, CardBody, Form, Col, Row, Container, FormGroup, Button } from 'reactstrap';
+import Spinner from '../../commons/spinner/spinner.component'
 
-import FormInput from '../../commons/form/input.component';
+const UpdateDetails = lazy(() => import('./update-details/update-details.component'));
+const UpdatePassword = lazy(() => import('./update-password/update-password.component'));
 
-import { initialState } from './manage-account.model';
-import { dynamicFormValidation } from '../../../utils/functions';
+const ManageAccount = ({ match }) => (
+  <Suspense fallback={<Spinner/>}>
+    <Route exact path={`${match.path}/`} component={UpdateDetails} />
+    <Route exact path={`${match.path}/update-password`} component={UpdatePassword} />
+  </Suspense>
+);
 
-import { updateUserStart, cleanUser } from '../../../redux/users/users.actions'
-import { selectError, selectLoading } from '../../../redux/users/users.selectors';
-
-import Spinner from '../../commons/spinner/spinner.component';
-
-import { toast } from 'react-toastify';
-
-const ManageAccount = ({ updateUser, history, error, cleanUser, loading }) => {
-  const [state, setState] = useState({ ...initialState });
-  const {formPayload, validationRules} = state;
-  const {name, email} = formPayload;
-
-  useEffect(() => {
-    if (error) {
-      toast.error(`${error}, please try again`);
-    }
-
-    return () => {
-      cleanUser('error', '');
-    }
-  }, [error, cleanUser])
-
-  const handleChange = ({ target: { name, value } }) => setState({...state, formPayload: { ...formPayload, [name]: value }});
-
-  const isValid = () => {
-    const { next, rules } = dynamicFormValidation(formPayload, validationRules);
-
-    setState({ ...state, validationRules: rules });
-
-    return next;
-  }
-
-  const handleSubmit = () => {
-    if (isValid()) {
-      // do API stuff
-      const data = {
-        email,
-        name
-      };
-
-      debugger
-
-      updateUser(data, history);
-    }
-  }
-
-  if (loading) {
-    return <Spinner />;
-  }
-
-  return (
-    <div className='section'>
-      <Container>
-        <Row>
-          <Col md={8} className='m-auto'>
-            <Card className='bg-white py-2 px-4'>
-              <CardBody>
-                <h1 className="mb-2">Manage Account</h1>
-              </CardBody>
-              <Form>
-                <FormInput
-                  inputType='labelText'
-                  value={name}
-                  name='name'
-                  labelText='* Name'
-                  onChange={handleChange}
-                  className='form-control'
-                  id='name'
-                  isValid={validationRules.name}
-                  required
-                  placeholder='Enter Your Name'
-                />
-                <FormInput
-                  type='email'
-                  inputType='labelText'
-                  value={email}
-                  name='email'
-                  labelText='* Email'
-                  onChange={handleChange}
-                  className='form-control'
-                  id='email'
-                  placeholder='Enter Your Email'
-                  isValid={validationRules.email}
-                  required
-                />
-                <FormGroup>
-                  <Row>
-                    <Col md={6}>
-                      <Button color='success' className='btn-block' onClick={handleSubmit}>Save</Button>
-                    </Col>
-                    <Col md={6}>
-                      <Button color='success' className='btn-block'>
-                        <Link to='/account/update-password'>Update Password</Link>
-                      </Button>
-                    </Col>
-                  </Row>
-                </FormGroup>
-              </Form>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  )
-}
-
-const mapDispatchToProps = dispatch => ({
-  updateUser: (data, history) => dispatch(updateUserStart(data, history)),
-  cleanUser: (property, value) => dispatch(cleanUser(property, value))
-});
-
-const mapStateToProps = createStructuredSelector({
-  error: selectError,
-  loading: selectLoading
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ManageAccount));
+export default ManageAccount;

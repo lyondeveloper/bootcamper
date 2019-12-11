@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 
 import Spinner from '../../commons/spinner/spinner.component';
 
@@ -25,4 +25,4 @@ const Auth = ({ match }) => (
   </div>
 );
 
-export default Auth;
+export default withRouter(Auth);

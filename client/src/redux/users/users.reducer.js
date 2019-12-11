@@ -27,19 +27,40 @@ export default function usersReducer(state = initialState, action) {
         isAuthenticated: true
       };
 
-    case localTypes.LOGOUT_USER:
+    case apiTypes.LOGOUT_USER_SUCCESS:
       return {
         ...state,
         currentUser: {},
         isAuthenticated: false
       };
 
+    case apiTypes.UPDATE_PASSWORD_START:
     case apiTypes.UPDATE_USER_START:
     case apiTypes.REGISTER_USER_START:
     case apiTypes.LOGIN_USER_START:
+    case apiTypes.FORGOT_PASSWORD_START:
       return {
         ...state,
         loading: true
+      };
+
+    case apiTypes.UPDATE_PASSWORD_FAILURE:
+    case apiTypes.UPDATE_USER_FAILURE:
+    case apiTypes.REGISTER_USER_FAILURE:
+    case apiTypes.LOGIN_USER_FAILURE:
+    case apiTypes.FORGOT_PASSWORD_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+        loading: false
+      };
+
+    case apiTypes.UPDATE_PASSWORD_SUCCESS:
+    case apiTypes.FORGOT_PASSWORD_SUCCESS:
+    case apiTypes.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false
       };
 
     case apiTypes.REGISTER_USER_SUCCESS:
@@ -56,22 +77,6 @@ export default function usersReducer(state = initialState, action) {
         loading: false
       };
 
-    case apiTypes.UPDATE_USER_SUCCESS:
-      return {
-        ...state,
-        isAuthenticated: false,
-        currentUser: {},
-        loading: false
-      };
-
-    case apiTypes.UPDATE_USER_FAILURE:
-    case apiTypes.REGISTER_USER_FAILURE:
-    case apiTypes.LOGIN_USER_FAILURE:
-      return {
-        ...state,
-        error: action.payload,
-        loading: false
-      };
     default:
       return state;
   }

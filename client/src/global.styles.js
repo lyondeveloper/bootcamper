@@ -19,9 +19,11 @@ const GlobalStyles = createGlobalStyle`
     margin-top: 8rem !important;
   }
 
-  a {
-    color: white !important;
-    text-decoration: none;
+  .navbar {
+    a {
+      color: white !important;
+      text-decoration: none;
+    }
   }
 
   .dropdown {

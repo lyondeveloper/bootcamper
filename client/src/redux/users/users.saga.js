@@ -1,5 +1,5 @@
 import { put, takeLatest, all, call } from "redux-saga/effects";
-import { apiTypes, localTypes } from "./users.types";
+import { apiTypes } from "./users.types";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-toastify";
@@ -10,11 +10,16 @@ import {
   registerUserFailure,
   loginUserFailure,
   loginUserSuccess,
+  logoutUserSuccess,
+  logoutUserFailure,
   renovateTokenFailure,
   renovateTokenSuccess,
   updateUserFailure,
   updateUserSuccess,
-  logoutUser
+  forgotPasswordFailure,
+  forgotPasswordSuccess,
+  updatePasswordFailure,
+  updatePasswordSuccess
 } from "./users.actions";
 
 export function* renovateToken({ payload }) {
@@ -66,6 +71,20 @@ export function* loginUserExecute({ payload, history }) {
   }
 }
 
+export function* logoutUser({ history }) {
+  try {
+
+    yield axios.get('/api/v1/auth/logout');
+
+    yield put(logoutUserSuccess());
+
+    history.push('/auth/login');
+
+  } catch(err) {
+    yield put(logoutUserFailure(err));
+  }
+}
+
 export function* updateUserExecute({ payload, history }) {
   try {
     yield axios.put('/api/v1/auth/updatedetails', payload);
@@ -77,6 +96,27 @@ export function* updateUserExecute({ payload, history }) {
   }
 }
 
+export function* updatePassword({ payload }) {
+  try {
+    yield axios.put('/api/v1/auth/updatepassword', payload);
+    yield put(updatePasswordSuccess());
+    yield put(logoutUser());
+
+  } catch(err) {
+    yield put(updatePasswordFailure(err.response.data.error))
+  }
+}
+
+export function* forgotPassword({ payload }) {
+  try {
+    yield axios.post('/api/v1/auth/forgotpassword', payload);
+
+    yield put(forgotPasswordSuccess());
+
+  } catch(err) {
+    yield put(forgotPasswordFailure(err.response.data.error));
+  }
+}
 
 export function* renovateTokenListener() {
   yield takeLatest(apiTypes.RENOVATE_TOKEN_START, renovateToken);
@@ -90,8 +130,20 @@ export function* loginUserListener() {
   yield takeLatest(apiTypes.LOGIN_USER_START, loginUserExecute);
 }
 
+export function* logoutUserListener() {
+  yield takeLatest(apiTypes.LOGOUT_USER_START, logoutUser);
+}
+
 export function* updateUserListener() {
   yield takeLatest(apiTypes.UPDATE_USER_START, updateUserExecute);
+}
+
+export function* forgotPasswordListener() {
+  yield takeLatest(apiTypes.FORGOT_PASSWORD_START, forgotPassword);
+}
+
+export function* updatePasswordListener() {
+  yield takeLatest(apiTypes.UPDATE_PASSWORD_START, updatePassword);
 }
 
 export default function* userSaga() {
@@ -99,6 +151,9 @@ export default function* userSaga() {
     call(loginUserListener),
     call(registerUserListener),
     call(renovateTokenListener),
-    call(updateUserListener)
+    call(updateUserListener),
+    call(forgotPasswordListener),
+    call(updatePasswordListener),
+    call(logoutUserListener)
   ]);
 }

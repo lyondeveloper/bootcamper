@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {
   Navbar,
   NavbarBrand,
@@ -18,12 +18,12 @@ import {
 } from 'reactstrap';
 
 import { selectCurrentUser } from '../../../redux/users/users.selectors';
-import { logoutUser } from '../../../redux/users/users.actions';
+import { logoutUserStart } from '../../../redux/users/users.actions';
 import { createStructuredSelector } from 'reselect';
 
 import { deleteDataOnLogout } from '../../../utils/functions';
 
-const Header = ({ currentUser, logoutUser }) => {
+const Header = ({ currentUser, logoutUser, history }) => {
   const [state, setState] = useState({
     isOpen: false,
     isOpenDropdown: false
@@ -37,7 +37,7 @@ const Header = ({ currentUser, logoutUser }) => {
     setState({ ...state, isOpenDropdown: !isOpenDropdown });
 
   const logout = () => {
-    logoutUser();
+    logoutUser(history);
 
     deleteDataOnLogout(['userSession', 'jwtToken']);
   };
@@ -142,11 +142,11 @@ const Header = ({ currentUser, logoutUser }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  logoutUser: () => dispatch(logoutUser())
+  logoutUser: history => dispatch(logoutUserStart(history))
 });
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

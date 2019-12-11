@@ -12,11 +12,28 @@ const Bootcamp = lazy(() =>
   import('../../screens/bootcamp/bootcamp.component')
 );
 
-const BootcampsPage = ({ match, getBootcamps }) => (
-  <Suspense fallback={<Spinner />}>
-    <Route exact path={`${match.path}`} component={Bootcamps} />
-    <Route exact path={`${match.path}/:id`} component={Bootcamp} />
-  </Suspense>
+// Reviews that depends on bootcamps
+const Reviews = lazy(() =>
+  import('../../screens/reviews/reviews-overview.component')
 );
+
+const AddReview = lazy(() =>
+  import('../../screens/add-review/add-review.component')
+);
+
+const BootcampsPage = ({ match, getBootcamps }) => {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <Route exact path={`${match.path}`} component={Bootcamps} />
+      <Route exact path={`${match.path}/:id`} component={Bootcamp} />
+      <Route exact path={`${match.path}/:id/reviews`} component={Reviews} />
+      <Route
+        exact
+        path={`${match.path}/:id/add-review`}
+        component={AddReview}
+      />
+    </Suspense>
+  );
+};
 
 export default BootcampsPage;

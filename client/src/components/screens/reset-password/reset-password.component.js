@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import FormInput from '../../commons/form/input.component';
-
+import React, { useState, useEffect } from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { connect } from 'react-redux'
 import { Container, Row, Col, Card, CardBody, Form, Button } from 'reactstrap';
+import { createStructuredSelector } from 'reselect';
+
+import FormInput from '../../commons/form/input.component';
+import Spinner from '../../commons/spinner/spinner.component'
+import ResetPasswordSent from './reset-password-sent.component'
 
 import { initialState } from './reset-password.model';
-
 import { dynamicFormValidation } from '../../../utils/functions';
 
-import { toast } from 'react-toastify';
+import { forgotPasswordStart, cleanUser } from '../../../redux/users/users.actions';
+import { selectLoading, selectError } from '../../../redux/users/users.selectors';
 
-const ResetPassword = ({ match }) => {
+const ResetPassword = ({ match, forgotPassword, loading, error, cleanUser, history }) => {
   const [state, setState] = useState({ ...initialState });
 
-  const { formPayload, validationRules } = state;
+  useEffect(() => {
+    if (error) {
+      toast.error(`${error}, please try again`);
+    }
+
+    return () => {
+      cleanUser('error', '');
+    };
+  }, [error]);
+
+  const { formPayload, validationRules, emailSent } = state;
   const { email } = formPayload;
 
   const handleChange = ({ target: { name, value } }) =>
@@ -30,9 +45,16 @@ const ResetPassword = ({ match }) => {
   const handleSubmit = () => {
     if (isValid()) {
       // do stuff with API
-      toast.success('Your password have been restored');
+      forgotPassword({ email }, history);
+      setState({ ...state, emailSent: true });
     }
   };
+
+  if (loading) return <Spinner />;
+
+
+  if (emailSent) return <ResetPasswordSent />;
+
 
   return (
     <Container className='mt-5'>
@@ -59,11 +81,11 @@ const ResetPassword = ({ match }) => {
                 />
                 <Button
                   color='dark'
-                  type='submit'
+                  type='button'
                   className='btn-block'
                   onClick={handleSubmit}
                 >
-                  Login
+                  Reset
                 </Button>
               </Form>
             </CardBody>
@@ -74,4 +96,14 @@ const ResetPassword = ({ match }) => {
   );
 };
 
-export default ResetPassword;
+const mapDispatchToProps = dispatch => ({
+  forgotPassword: (payload, history) => dispatch(forgotPasswordStart(payload, history)),
+  cleanUser: (property, value) => dispatch(cleanUser(property, value)),
+});
+
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading,
+  error: selectError
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ResetPassword));

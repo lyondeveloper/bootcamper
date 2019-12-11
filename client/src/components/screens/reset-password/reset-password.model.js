@@ -8,5 +8,6 @@ export const initialValidationRules = {
 
 export const initialState = {
   formPayload: { ...initialFormPayload },
-  validationRules: { ...initialValidationRules }
+  validationRules: { ...initialValidationRules },
+  emailSent: false
 };

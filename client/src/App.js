@@ -1,6 +1,6 @@
 import React, { Fragment, Suspense, lazy, useEffect } from "react";
 import { connect } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { createStructuredSelector } from "reselect";
 
@@ -10,7 +10,6 @@ import {
   selectUserTokenInformation,
   selectCurrentUser
 } from "./redux/users/users.selectors";
-import { selectSpinnerActivated } from "./redux/app/app.selectors";
 
 // Components
 import Header from "./components/commons/navbar/navbar.component";
@@ -29,6 +28,7 @@ const Auth = lazy(() => import("./components/pages/auth/auth.component"));
 const Bootcamps = lazy(() =>
   import("./components/pages/bootcamps/bootcamps.component")
 );
+
 const Account = lazy(() =>
   import("./components/pages/account/account.component")
 );
