@@ -1,15 +1,15 @@
-import { combineReducers } from 'redux';
-import { persistReducer } from 'redux-persist';
+import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
 
-import bootcampsReducer from './bootcamps/bootcamp.reducer';
-import usersReducer from './users/users.reducer';
+import bootcampsReducer from "./bootcamps/bootcamp.reducer";
+import usersReducer from "./users/users.reducer";
 
-import storage from 'redux-persist/lib/storage';
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['user']
+  whitelist: ["bootcamps"]
 };
 
 const rootReducer = combineReducers({

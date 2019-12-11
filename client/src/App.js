@@ -10,6 +10,7 @@ import {
   selectUserTokenInformation,
   selectCurrentUser
 } from "./redux/users/users.selectors";
+import { selectSpinnerActivated } from "./redux/app/app.selectors";
 
 // Components
 import Header from "./components/commons/navbar/navbar.component";
@@ -32,7 +33,7 @@ const Account = lazy(() =>
   import("./components/pages/account/account.component")
 );
 
-const App = ({ currentUser }) => {
+const App = ({ currentUser, spinnerActivated }) => {
   // useEffect(() => {
   //   if (Object.keys(currentUser).length > 0) {
   //     const {
@@ -72,6 +73,7 @@ const App = ({ currentUser }) => {
       <GlobalStyles />
       <Header />
       <ToastContainer />
+      <Spinner active={spinnerActivated} />
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
           <Switch>
@@ -88,7 +90,8 @@ const App = ({ currentUser }) => {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  tokenInfo: selectUserTokenInformation
+  tokenInfo: selectUserTokenInformation,
+  spinnerActivated: selectSpinnerActivated
 });
 
 const mapDispatchToProps = dispatch => ({
