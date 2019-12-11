@@ -1,6 +1,6 @@
-import React, { Fragment, memo } from "react";
-import PropTypes from "prop-types";
-import { Input, FormGroup, FormFeedback, Label } from "reactstrap";
+import React, { Fragment, memo } from 'react';
+import PropTypes from 'prop-types';
+import { Input, FormGroup, FormFeedback, Label } from 'reactstrap';
 
 const FormInput = ({
   name,
@@ -23,7 +23,7 @@ const FormInput = ({
   let inputContent;
 
   switch (inputType) {
-    case "text":
+    case 'text':
       inputContent = (
         <Input
           name={name}
@@ -39,7 +39,7 @@ const FormInput = ({
 
       break;
 
-    case "labelText":
+    case 'labelText':
       inputContent = (
         <Fragment>
           <Label for={name}>{labelText}</Label>
@@ -58,11 +58,11 @@ const FormInput = ({
 
       break;
 
-    case "number":
+    case 'number':
       inputContent = (
         <Input
           name={name}
-          type="number"
+          type='number'
           min={min}
           max={max ? max : 99}
           className={className}
@@ -76,7 +76,7 @@ const FormInput = ({
 
       break;
 
-    case "select":
+    case 'select':
       inputContent = (
         <Fragment>
           <Label for={name}> {labelText} </Label>
@@ -98,7 +98,7 @@ const FormInput = ({
 
       break;
 
-    case "file":
+    case 'file':
       inputContent = (
         <Fragment>
           <Label for={name}> {labelText} </Label>
@@ -144,14 +144,14 @@ FormInput.propTypes = {
 };
 
 FormInput.defaultProps = {
-  className: "",
-  type: "text",
-  inputType: "",
-  placeholder: "",
-  labelText: "",
+  className: '',
+  type: 'text',
+  inputType: '',
+  placeholder: '',
+  labelText: '',
   required: false,
   isValid: true,
-  errorText: "This field is required",
+  errorText: 'This field is required',
   options: [],
   onBlur: () => {}
 };

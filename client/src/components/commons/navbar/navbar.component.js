@@ -142,7 +142,7 @@ const Header = ({ currentUser, logoutUser, history }) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  logoutUser: (history) => dispatch(logoutUserStart(history))
+  logoutUser: history => dispatch(logoutUserStart(history))
 });
 
 const mapStateToProps = createStructuredSelector({
