@@ -1,39 +1,39 @@
-import React, { Fragment, Suspense, lazy, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import { createStructuredSelector } from 'reselect';
+import React, { Fragment, Suspense, lazy, useEffect } from "react";
+import { connect } from "react-redux";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { createStructuredSelector } from "reselect";
 
 // Authentication redux stuff
-import { renovateTokenStart } from './redux/users/users.actions';
+import { renovateTokenStart } from "./redux/users/users.actions";
 import {
   selectUserTokenInformation,
   selectCurrentUser
-} from './redux/users/users.selectors';
+} from "./redux/users/users.selectors";
 
 // Components
-import Header from './components/commons/navbar/navbar.component';
-import Spinner from './components/commons/spinner/spinner.component';
-import ErrorBoundary from './components/commons/error-boundary/error-boundary.component';
-import GlobalStyles from './global.styles';
+import Header from "./components/commons/navbar/navbar.component";
+import Spinner from "./components/commons/spinner/spinner.component";
+import ErrorBoundary from "./components/commons/error-boundary/error-boundary.component";
+import GlobalStyles from "./global.styles";
 
-import { getItemFromLocalStorage } from './utils/functions';
-import moment from 'moment';
+import { getItemFromLocalStorage } from "./utils/functions";
+import moment from "moment";
 
 // Lazy components
 const Homepage = lazy(() =>
-  import('./components/pages/homepage/homepage.component')
+  import("./components/pages/homepage/homepage.component")
 );
-const Auth = lazy(() => import('./components/pages/auth/auth.component'));
+const Auth = lazy(() => import("./components/pages/auth/auth.component"));
 const Bootcamps = lazy(() =>
-  import('./components/pages/bootcamps/bootcamps.component')
+  import("./components/pages/bootcamps/bootcamps.component")
 );
 
 const Account = lazy(() =>
-  import('./components/pages/account/account.component')
+  import("./components/pages/account/account.component")
 );
 
-const App = ({ currentUser }) => {
+const App = ({ currentUser, spinnerActivated }) => {
   // useEffect(() => {
   //   if (Object.keys(currentUser).length > 0) {
   //     const {
@@ -73,13 +73,14 @@ const App = ({ currentUser }) => {
       <GlobalStyles />
       <Header />
       <ToastContainer />
+      <Spinner active={spinnerActivated} />
       <ErrorBoundary>
         <Suspense fallback={<Spinner />}>
           <Switch>
-            <Route exact path='/' component={Homepage} />
-            <Route path='/auth' component={Auth} />
-            <Route path='/bootcamps' component={Bootcamps} />
-            <Route path='/account' component={Account} />
+            <Route exact path="/" component={Homepage} />
+            <Route path="/auth" component={Auth} />
+            <Route path="/bootcamps" component={Bootcamps} />
+            <Route path="/account" component={Account} />
           </Switch>
         </Suspense>
       </ErrorBoundary>
@@ -89,7 +90,8 @@ const App = ({ currentUser }) => {
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
-  tokenInfo: selectUserTokenInformation
+  tokenInfo: selectUserTokenInformation,
+  spinnerActivated: selectSpinnerActivated
 });
 
 const mapDispatchToProps = dispatch => ({
