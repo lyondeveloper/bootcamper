@@ -102,7 +102,7 @@ const Bootcamp = ({ bootcamp, getSingleBootcamp, match, loading }) => {
                 </Button>
               </Link>
 
-              <Link to='/add-review'>
+              <Link to={`${match.url}/add-review`}>
                 <Button className='btn-light btn-block my-3'>
                   <i className='fas fa-pencil-alt' /> Write a Review
                 </Button>

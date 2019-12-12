@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   img {
@@ -19,11 +19,9 @@ const GlobalStyles = createGlobalStyle`
     margin-top: 8rem !important;
   }
 
-  .navbar {
-    a {
-      color: white !important;
-      text-decoration: none;
-    }
+  a {
+    text-decoration: none;
+    color: white;
   }
 
   .dropdown {

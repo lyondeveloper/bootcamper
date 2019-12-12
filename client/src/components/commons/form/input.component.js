@@ -18,7 +18,10 @@ const FormInput = ({
   id,
   min,
   max,
-  options
+  options,
+  rows,
+  valueClassname,
+  step
 }) => {
   let inputContent;
 
@@ -35,6 +38,47 @@ const FormInput = ({
           onBlur={onBlur}
           invalid={required && !isValid && value.length < 1}
         />
+      );
+
+      break;
+
+    case 'textArea':
+      inputContent = (
+        <textarea
+          name={name}
+          id={id}
+          rows={rows}
+          className={className}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+      );
+
+      break;
+
+    case 'range':
+      inputContent = (
+        <Fragment>
+          <Label for={name}>
+            {labelText}: {' '}
+            <span className={valueClassname}>
+              {value}
+            </span>
+          </Label>
+          <Input
+            name={name}
+            type='range'
+            className={className}
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        </Fragment>
       );
 
       break;
@@ -139,6 +183,9 @@ FormInput.propTypes = {
   labelText: PropTypes.string,
   required: PropTypes.bool,
   errorText: PropTypes.string,
+  rows: PropTypes.string,
+  valueClassname: PropTypes.string,
+  step: PropTypes.string,
   isValid: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any))
 };
@@ -152,8 +199,11 @@ FormInput.defaultProps = {
   required: false,
   isValid: true,
   errorText: 'This field is required',
+  rows: '',
+  step: '',
+  valueClassname: '',
   options: [],
-  onBlur: () => {}
+  onBlur: () => { }
 };
 
 export default memo(FormInput);
