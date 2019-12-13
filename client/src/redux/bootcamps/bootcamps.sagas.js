@@ -2,7 +2,7 @@ import { takeLatest, put, call, all } from "redux-saga/effects";
 
 import axios from "axios";
 
-import types from "./bootcamps.types";
+import { apiTypes } from "./bootcamps.types";
 
 import {
   getBootcampsFailure,
@@ -41,11 +41,11 @@ export function* fetchBootcampsExecute() {
 }
 
 export function* fetchBootcampsListener() {
-  yield takeLatest(types.GET_BOOTCAMPS_START, fetchBootcampsExecute);
+  yield takeLatest(apiTypes.GET_BOOTCAMPS_START, fetchBootcampsExecute);
 }
 
 export function* fetchSingleBootcampListener() {
-  yield takeLatest(types.GET_SINGLE_BOOTCAMP_START, fetchSingleBootcampExecute);
+  yield takeLatest(apiTypes.GET_SINGLE_BOOTCAMP_START, fetchSingleBootcampExecute);
 }
 
 export default function* bootcampSagas() {

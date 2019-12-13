@@ -21,7 +21,8 @@ const FormInput = ({
   options,
   rows,
   valueClassname,
-  step
+  step,
+  maxlength
 }) => {
   let inputContent;
 
@@ -53,6 +54,7 @@ const FormInput = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          maxlength={maxlength}
         />
       );
 
@@ -142,6 +144,24 @@ const FormInput = ({
 
       break;
 
+    case 'check':
+      inputContent = (
+        <Fragment>
+          <Input
+            type='checkbox'
+            name={name}
+            id={id}
+            onChange={onChange}
+            onBlur={onBlur}
+            invalid={required && !isValid}
+            className='form-check-input'
+          />
+          <Label className='form-check-label' for={name}> {labelText} </Label>
+        </Fragment>
+      );
+
+      break;
+
     case 'file':
       inputContent = (
         <Fragment>
@@ -187,6 +207,7 @@ FormInput.propTypes = {
   valueClassname: PropTypes.string,
   step: PropTypes.string,
   isValid: PropTypes.bool,
+  maxlength: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any))
 };
 
@@ -200,6 +221,7 @@ FormInput.defaultProps = {
   isValid: true,
   errorText: 'This field is required',
   rows: '',
+  maxlength: '',
   step: '',
   valueClassname: '',
   options: [],

@@ -1,72 +1,56 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Col, Row, Container, Card, CardBody, Form } from 'reactstrap';
+import { Col, Row, Container, Card, CardBody, Form, Button } from 'reactstrap';
 
+import LocationAndContact from './location-contact.component';
+import OtherInfo from './other-info.component';
 import Spinner from '../../commons/spinner/spinner.component';
-import FormInput from '../../commons/form/input.component';
 
 import { dynamicFormValidation } from '../../../utils/functions';
 
 import {
-  selectBootcamps,
-  selectLoading
+  selectAddBootcampFormPayload,
+  selectLoading,
+  selectAddBootcampValidationRules,
+  selectAddBootcampCurrentStep
 } from '../../../redux/bootcamps/bootcamp.selectors';
 
-import { initialState } from './add-bootcamp.model';
+import {
+  addBootcampStart,
+  onDynamicChange
+} from '../../../redux/bootcamps/bootcamp.actions';
 
-const AddBootcamp = ({ loading }) => {
-  const [state, setState] = useState({ ...initialState });
-
-  const { formPayload, validationRules } = state;
-
-  const {
-    name,
-    description,
-    website,
-    phone,
-    email,
-    careers,
-    housing,
-    jobAssistance,
-    jobGuarantee,
-    acceptGi,
-    address
-  } = formPayload;
-
-  const handleChange = ({ target: { name, value } }) =>
-    setState({
-      ...state,
-      formPayload: {
-        ...formPayload,
-        [name]: value
-      }
-    });
-
-  const handleCareers = ({ target: { name, value } }) => {};
-
+const AddBootcamp = ({
+  loading,
+  formPayload,
+  submitBootcamp,
+  validationRules
+}) => {
   const isValid = () => {
     const { next, rules } = dynamicFormValidation(formPayload, validationRules);
-
-    setState({ ...state, validationRules: rules });
 
     return next;
   };
 
   const handleSubmit = () => {
-    if (isValid()) {
-      //do API stuff
-      // const payload = {
-      //   bootcampId: bootcamp.id,
-      //   data: {
-      //     title: formPayload.title,
-      //     text: formPayload.text,
-      //     rating: formPayload.rating
-      //   }
-      // };
-      // addReview(payload, history);
-    }
+    // if (isValid()) {
+    //   do API stuff
+    //   const payload = {
+    //     bootcampId: bootcamp.id,
+    //     data: {
+    //       title: formPayload.title,
+    //       text: formPayload.text,
+    //       rating: formPayload.rating
+    //     }
+    //   };
+    //   addReview(payload, history);
+    // }
   };
+
+  const { step1, step2 } = formPayload;
+
+  const { step1Rules, step2Rules } = validationRules;
 
   if (loading) return <Spinner />;
 
@@ -77,92 +61,36 @@ const AddBootcamp = ({ loading }) => {
         <p className='text-bold'>
           Important: You must be affiliated with a bootcamp to add to DevCamper
         </p>
-        <Row>
-          <Col md={6}>
-            <Card className='bg-white py-2 px-6'>
-              <CardBody>
-                <h3>Location & Contact</h3>
-                <p className='text-muted'>
-                  If multiple locations, use the main or largest
-                </p>
-                <Form>
-                  <FormInput
-                    name='name'
-                    labelText='Name'
-                    inputType='labelText'
-                    onChange={handleChange}
-                    isValid={validationRules.name}
-                    required
-                    value={name}
-                    id='name'
-                    placeholder='Bootcamp Name'
-                    className='form-control'
-                  />
-
-                  {/* TODO: ADD INPUT WITH SMALL TYPE */}
-                  <FormInput
-                    name='address'
-                    labelText='Address'
-                    inputType='labelText'
-                    onChange={handleChange}
-                    isValid={validationRules.address}
-                    required
-                    value={address}
-                    id='address'
-                    placeholder='Full Address'
-                    className='form-control'
-                  />
-
-                  <FormInput
-                    name='phone'
-                    labelText='Phone Number'
-                    inputType='labelText'
-                    onChange={handleChange}
-                    isValid={validationRules.phone}
-                    required
-                    value={phone}
-                    id='phone'
-                    placeholder='Phone'
-                    className='form-control'
-                  />
-
-                  <FormInput
-                    name='email'
-                    labelText='email'
-                    inputType='labelText'
-                    onChange={handleChange}
-                    isValid={validationRules.email}
-                    required
-                    value={email}
-                    id='email'
-                    placeholder='Contact Email'
-                    className='form-control'
-                  />
-
-                  <FormInput
-                    name='website'
-                    labelText='Website URL'
-                    inputType='labelText'
-                    onChange={handleChange}
-                    isValid={validationRules.website}
-                    required
-                    value={website}
-                    id='website'
-                    placeholder='Contact website'
-                    className='form-control'
-                  />
-                </Form>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+        <Form>
+          <Row>
+            <LocationAndContact step1={step1} step1Rules={step1Rules} />
+            <OtherInfo step2={step2} step2Rules={step2Rules} />
+          </Row>
+          <Button
+            onClick={handleSubmit}
+            color='success'
+            className='btn-block my-4'
+          >
+            Submit Bootcamp
+          </Button>
+        </Form>
       </Container>
     </div>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  loading: selectLoading
+  formPayload: selectAddBootcampFormPayload,
+  validationRules: selectAddBootcampValidationRules,
+  loading: selectLoading,
+  currentStep: selectAddBootcampCurrentStep
 });
 
-export default connect(mapStateToProps)(AddBootcamp);
+const mapDispatchToProps = dispatch => ({
+  addBootcamp: (payload, history) =>
+    dispatch(addBootcampStart(payload, history)),
+
+  onDynamicChange: () => dispatch(onDynamicChange())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBootcamp);

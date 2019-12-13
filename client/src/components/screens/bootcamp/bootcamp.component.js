@@ -21,10 +21,7 @@ import {
   selectSingleBootcamp,
   selectLoading
 } from '../../../redux/bootcamps/bootcamp.selectors';
-import {
-  getSingleBootcampStart,
-  setBootcampLoading
-} from '../../../redux/bootcamps/bootcamp.actions';
+import { getSingleBootcampStart } from '../../../redux/bootcamps/bootcamp.actions';
 import Spinner from '../../commons/spinner/spinner.component';
 
 const Bootcamp = ({ bootcamp, getSingleBootcamp, match, loading }) => {
@@ -176,8 +173,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getSingleBootcamp: id => dispatch(getSingleBootcampStart(id)),
-  setBootcampLoading: () => dispatch(setBootcampLoading())
+  getSingleBootcamp: id => dispatch(getSingleBootcampStart(id))
 });
 
 export default connect(

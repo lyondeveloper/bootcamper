@@ -1,23 +1,20 @@
-import types from './bootcamps.types';
+import { apiTypes, localTypes } from './bootcamps.types';
 
-const initialState = {
-  bootcamps: [],
-  singleBootcamp: {},
-  loading: false,
-  error: null
-};
+import { initialState } from './bootcamp.model';
 
-export default function bootcampReducer(state = initialState, action) {
+const bootcampInitialState = { ...initialState };
+
+export default function bootcampReducer(state = bootcampInitialState, action) {
   switch (action.type) {
-    case types.GET_SINGLE_BOOTCAMP_START:
-    case types.GET_BOOTCAMPS_START:
+    case apiTypes.GET_SINGLE_BOOTCAMP_START:
+    case apiTypes.GET_BOOTCAMPS_START:
       return {
         ...state,
         loading: true,
         error: null
       };
 
-    case types.GET_BOOTCAMPS_SUCCESS:
+    case apiTypes.GET_BOOTCAMPS_SUCCESS:
       return {
         ...state,
         bootcamps: action.payload,
@@ -25,7 +22,7 @@ export default function bootcampReducer(state = initialState, action) {
         error: null
       };
 
-    case types.GET_SINGLE_BOOTCAMP_SUCCESS:
+    case apiTypes.GET_SINGLE_BOOTCAMP_SUCCESS:
       return {
         ...state,
         singleBootcamp: action.payload,
@@ -33,8 +30,8 @@ export default function bootcampReducer(state = initialState, action) {
         error: null
       };
 
-    case types.GET_BOOTCAMPS_FAILURE:
-    case types.GET_SINGLE_BOOTCAMP_FAILURE:
+    case apiTypes.GET_BOOTCAMPS_FAILURE:
+    case apiTypes.GET_SINGLE_BOOTCAMP_FAILURE:
       return {
         ...state,
         loading: false,

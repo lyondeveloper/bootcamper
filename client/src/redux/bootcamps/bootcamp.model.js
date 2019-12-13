@@ -35,7 +35,6 @@ export const layout = {
       value: 'Other'
     }
   ],
-
   budget: [
     {
       id: 0,
@@ -77,7 +76,6 @@ export const layout = {
       value: '2,000'
     }
   ],
-
   rating: [
     {
       id: 0,
@@ -124,8 +122,7 @@ export const layout = {
       value: '2+'
     }
   ]
-
-}
+};
 
 export const step1Payload = {
   name: '',
@@ -133,7 +130,7 @@ export const step1Payload = {
   email: '',
   address: '',
   website: ''
-}
+};
 
 export const step2Payload = {
   description: '',
@@ -142,7 +139,7 @@ export const step2Payload = {
   jobAssistance: false,
   jobGuarantee: false,
   acceptGi: false
-}
+};
 
 export const step1Rules = {
   name: true,
@@ -155,13 +152,13 @@ export const step1Rules = {
 export const step2Rules = {
   description: true,
   careers: true
-}
+};
 
 export const initialAddBootcamp = {
+  currentStep: 1,
   formPayload: {
     step1: { ...step1Payload },
-    step2: { ...step2Payload },
-    currentStep: 1
+    step2: { ...step2Payload }
   },
   validationRules: {
     step1Rules: { ...step1Rules },
@@ -184,9 +181,13 @@ export const initialFilterBootcamp = {
       career: ''
     }
   }
-}
+};
 
 export const initialState = {
   filterBootcamp: { ...initialFilterBootcamp },
-  addBootcamp: { ...initialAddBootcamp }
+  addBootcamp: { ...initialAddBootcamp },
+  bootcamps: [],
+  singleBootcamp: {},
+  loading: false,
+  error: null
 };
