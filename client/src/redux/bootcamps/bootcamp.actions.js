@@ -1,10 +1,13 @@
-import { apiTypes, localTypes } from './bootcamps.types';
+import { apiTypes, localTypes } from "./bootcamps.types";
 
 // local actions
-export const onDynamicChange = () => ({
-  type: localTypes.ON_CHANGE
-})
-
+export const onGlobalChange = (module, submodule, property, payload) => ({
+  type: localTypes.ON_CHANGE,
+  module,
+  submodule,
+  property,
+  payload
+});
 
 // api actions
 export const getBootcampsStart = () => ({

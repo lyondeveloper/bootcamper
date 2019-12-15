@@ -1,44 +1,47 @@
-import { apiTypes, localTypes } from './bootcamps.types';
+import { apiTypes, localTypes } from "./bootcamps.types";
+import produce from "immer";
+import { initialState } from "./bootcamp.model";
 
-import { initialState } from './bootcamp.model';
+export const bootcampInitialState = { ...initialState };
 
-const bootcampInitialState = { ...initialState };
+export default (state = bootcampInitialState, action) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case localTypes.ON_CHANGE: {
+        const { module, submodule, property, payload } = action;
 
-export default function bootcampReducer(state = bootcampInitialState, action) {
-  switch (action.type) {
-    case apiTypes.GET_SINGLE_BOOTCAMP_START:
-    case apiTypes.GET_BOOTCAMPS_START:
-      return {
-        ...state,
-        loading: true,
-        error: null
-      };
+        draft[module][submodule][property] = payload;
 
-    case apiTypes.GET_BOOTCAMPS_SUCCESS:
-      return {
-        ...state,
-        bootcamps: action.payload,
-        loading: false,
-        error: null
-      };
+        break;
+      }
 
-    case apiTypes.GET_SINGLE_BOOTCAMP_SUCCESS:
-      return {
-        ...state,
-        singleBootcamp: action.payload,
-        loading: false,
-        error: null
-      };
+      case apiTypes.GET_SINGLE_BOOTCAMP_START:
+      case apiTypes.GET_BOOTCAMPS_START:
+        draft.loading = true;
+        draft.error = null;
 
-    case apiTypes.GET_BOOTCAMPS_FAILURE:
-    case apiTypes.GET_SINGLE_BOOTCAMP_FAILURE:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload
-      };
+        break;
 
-    default:
-      return state;
-  }
-}
+      case apiTypes.GET_BOOTCAMPS_SUCCESS:
+        draft.bootcamps = action.payload;
+        draft.loading = false;
+        draft.error = null;
+
+        break;
+
+      case apiTypes.GET_SINGLE_BOOTCAMP_SUCCESS:
+        draft.singleBootcamp = action.payload;
+        draft.loading = false;
+        draft.error = null;
+
+      case apiTypes.GET_BOOTCAMPS_FAILURE:
+      case apiTypes.GET_SINGLE_BOOTCAMP_FAILURE:
+        draft.loading = false;
+        draft.error = action.payload;
+
+        break;
+
+      default:
+        return draft;
+    }
+  });
