@@ -1,10 +1,11 @@
-import { apiTypes, localTypes } from './users.types';
+import { apiTypes, localTypes } from "./users.types";
+
+import { userInitialState } from "./users.model";
 
 const initialState = {
+  ...userInitialState,
   currentUser: {},
-  isAuthenticated: false,
-  loading: false,
-  error: null
+  isAuthenticated: false
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -15,7 +16,7 @@ export default function usersReducer(state = initialState, action) {
       const newState = {
         ...state,
         [property]: value
-      }
+      };
       return {
         ...newState
       };

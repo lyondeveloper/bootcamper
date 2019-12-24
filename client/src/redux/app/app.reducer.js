@@ -1,3 +1,4 @@
+import produce from "immer";
 import { combineReducers } from "redux";
 import bootcampsReducer from "../bootcamps/bootcamp.reducer";
 import usersReducer from "../users/users.reducer";
@@ -5,11 +6,9 @@ import reviewsReducer from "../reviews/reviews.reducer";
 
 import { localTypes } from "./app.types";
 
-import produce from "immer";
-
 const appReducer = combineReducers({
   bootcamps: bootcampsReducer,
-  user: usersReducer,
+  users: usersReducer,
   reviews: reviewsReducer
 });
 

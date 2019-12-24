@@ -8,9 +8,11 @@ import { registerUserStart } from "../../../redux/users/users.actions";
 
 import { initialState, layout } from "./register.model";
 import FormInput from "../../commons/form/input.component";
+import Spinner from "../../commons/spinner/spinner.component";
 import { dynamicFormValidation } from "../../../utils/functions";
+import { selectLoading } from "../../../redux/users/users.selectors";
 
-const Register = ({ registerUser, history }) => {
+const Register = ({ registerUser, history, loading }) => {
   const [state, setState] = useState({ ...initialState });
 
   const { formPayload, validationRules } = state;
@@ -45,6 +47,8 @@ const Register = ({ registerUser, history }) => {
       registerUser(data, history);
     }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <section className="form mt-5">
@@ -133,8 +137,15 @@ const Register = ({ registerUser, history }) => {
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  loading: selectLoading
+});
+
 const mapDispatchToProps = dispatch => ({
   registerUser: (data, history) => dispatch(registerUserStart(data, history))
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(Register));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Register));

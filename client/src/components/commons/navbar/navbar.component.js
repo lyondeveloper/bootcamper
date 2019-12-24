@@ -13,8 +13,7 @@ import {
   Dropdown,
   DropdownItem,
   DropdownToggle,
-  DropdownMenu,
-  Button
+  DropdownMenu
 } from 'reactstrap';
 
 import { selectCurrentUser } from '../../../redux/users/users.selectors';

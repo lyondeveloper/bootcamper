@@ -43,7 +43,7 @@ const AddReview = ({
     }
 
     return () => changeReviewState("error", "");
-  }, ["error", "changeReviewState"]);
+  }, [error, changeReviewState]);
 
   const handleChange = ({ target: { name, value } }) =>
     setState({

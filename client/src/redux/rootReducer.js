@@ -6,7 +6,7 @@ import rootReducer from "./app/app.reducer";
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user", "bootcamps", "reviews"]
+  whitelist: ["user", "reviews"]
 };
 
 export default persistReducer(persistConfig, rootReducer);

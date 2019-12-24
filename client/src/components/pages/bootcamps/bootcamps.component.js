@@ -25,7 +25,7 @@ const AddReview = lazy(() =>
   import("../../screens/add-review/add-review.component")
 );
 
-const BootcampsPage = ({ match, getBootcamps }) => {
+const BootcampsPage = ({ match, cleanModule }) => {
   useEffect(() => {
     return () => {
       cleanModule("bootcamps", bootcampInitialState);

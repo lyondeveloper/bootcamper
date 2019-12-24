@@ -73,47 +73,42 @@ export function* loginUserExecute({ payload, history }) {
 
 export function* logoutUser({ history }) {
   try {
-
-    yield axios.get('/api/v1/auth/logout');
+    yield axios.get("/api/v1/auth/logout");
 
     yield put(logoutUserSuccess());
 
-    history.push('/auth/login');
-
-  } catch(err) {
+    history.push("/auth/login");
+  } catch (err) {
     yield put(logoutUserFailure(err));
   }
 }
 
 export function* updateUserExecute({ payload, history }) {
   try {
-    yield axios.put('/api/v1/auth/updatedetails', payload);
+    yield axios.put("/api/v1/auth/updatedetails", payload);
     yield put(updateUserSuccess());
     yield put(logoutUser());
-
-  } catch(err) {
+  } catch (err) {
     yield put(updateUserFailure(err));
   }
 }
 
 export function* updatePassword({ payload }) {
   try {
-    yield axios.put('/api/v1/auth/updatepassword', payload);
+    yield axios.put("/api/v1/auth/updatepassword", payload);
     yield put(updatePasswordSuccess());
     yield put(logoutUser());
-
-  } catch(err) {
-    yield put(updatePasswordFailure(err.response.data.error))
+  } catch (err) {
+    yield put(updatePasswordFailure(err.response.data.error));
   }
 }
 
 export function* forgotPassword({ payload }) {
   try {
-    yield axios.post('/api/v1/auth/forgotpassword', payload);
+    yield axios.post("/api/v1/auth/forgotpassword", payload);
 
     yield put(forgotPasswordSuccess());
-
-  } catch(err) {
+  } catch (err) {
     yield put(forgotPasswordFailure(err.response.data.error));
   }
 }

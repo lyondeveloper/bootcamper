@@ -1,12 +1,12 @@
 export const formPayload = {
-  email: '',
-  name: ''
-}
+  email: "",
+  name: ""
+};
 
 export const validationRules = {
   email: true,
   name: true
-}
+};
 
 export const initialState = {
   formPayload: {

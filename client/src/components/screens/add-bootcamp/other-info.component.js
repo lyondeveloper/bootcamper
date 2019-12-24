@@ -5,7 +5,9 @@ import FormInput from "../../commons/form/input.component";
 
 import { step2Payload } from "../../../redux/bootcamps/bootcamp.model";
 
-const OtherInfo = ({ step2Rules }) => {
+import produce from "immer";
+
+const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
   const [state, setState] = useState({ ...step2Payload });
 
   const {
@@ -27,7 +29,15 @@ const OtherInfo = ({ step2Rules }) => {
 
   const handleCheck = ({ target: { name, value } }) => {};
 
-  const handleBlur = ({ target: { name, value } }) => {};
+  const handleBlur = ({ target: { name, value } }) => {
+    const step2Draffted = produce(step2, draftState => {
+      draftState[name] = value;
+    });
+
+    debugger;
+
+    onGlobalChange("addBootcamp", "formPayload", "step2", step2Draffted);
+  };
 
   return (
     <Col md={6}>
@@ -44,6 +54,7 @@ const OtherInfo = ({ step2Rules }) => {
             required
             rows="5"
             value={description}
+            onBlur={handleBlur}
             maxlength="500"
             id="description"
             placeholder="Description (What you offer, etc)"
@@ -60,6 +71,7 @@ const OtherInfo = ({ step2Rules }) => {
             value={housing}
             id="housing"
             className="form-control"
+            onBlur={handleBlur}
           />
 
           <FormInput
@@ -70,6 +82,7 @@ const OtherInfo = ({ step2Rules }) => {
             isValid={step2Rules.jobAssistance}
             value={jobAssistance}
             id="jobAssistance"
+            onBlur={handleBlur}
             className="form-control"
           />
 
@@ -79,6 +92,7 @@ const OtherInfo = ({ step2Rules }) => {
             inputType="check"
             onChange={handleCheck}
             isValid={step2Rules.jobGuarantee}
+            onBlur={handleBlur}
             value={jobGuarantee}
             id="jobGuarantee"
             className="form-control"
@@ -89,6 +103,7 @@ const OtherInfo = ({ step2Rules }) => {
             labelText="Accept GI Bill"
             inputType="check"
             onChange={handleCheck}
+            onBlur={handleBlur}
             isValid={step2Rules.acceptGi}
             value={acceptGi}
             id="acceptGi"
