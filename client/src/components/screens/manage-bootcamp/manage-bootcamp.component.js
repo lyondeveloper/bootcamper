@@ -72,7 +72,7 @@ const ManageBootcamp = () => {
               </Button>
             </Form>
             <div className="mb-2">
-              <Link to={`/edit-bootcamp/${bootcamp.id}`}>
+              <Link to={"/"}>
                 <Button color="primary" className="btn-block">
                   {" "}
                   Edit Bootcamp Details{" "}
