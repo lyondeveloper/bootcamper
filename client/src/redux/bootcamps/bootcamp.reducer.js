@@ -2,7 +2,7 @@ import { apiTypes, localTypes } from "./bootcamps.types";
 import produce from "immer";
 import { initialState } from "./bootcamp.model";
 
-export const bootcampInitialState = { ...initialState };
+export const bootcampInitialState = initialState;
 
 export default (state = bootcampInitialState, action) =>
   produce(state, draft => {
@@ -15,6 +15,7 @@ export default (state = bootcampInitialState, action) =>
         break;
       }
 
+      case apiTypes.ADD_BOOTCAMP_START:
       case apiTypes.GET_SINGLE_BOOTCAMP_START:
       case apiTypes.GET_BOOTCAMPS_START:
         draft.loading = true;
@@ -34,6 +35,9 @@ export default (state = bootcampInitialState, action) =>
         draft.loading = false;
         draft.error = null;
 
+        break;
+
+      case apiTypes.ADD_BOOTCAMP_FAILURE:
       case apiTypes.GET_BOOTCAMPS_FAILURE:
       case apiTypes.GET_SINGLE_BOOTCAMP_FAILURE:
         draft.loading = false;

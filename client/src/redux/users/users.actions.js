@@ -1,4 +1,4 @@
-import {apiTypes, localTypes} from "./users.types";
+import { apiTypes, localTypes } from "./users.types";
 
 // State Calls
 export const cleanUser = (property, value) => ({
@@ -10,6 +10,11 @@ export const cleanUser = (property, value) => ({
 export const setCurrentUser = user => ({
   type: localTypes.SET_CURRENT_USER,
   payload: user
+});
+
+export const setHasExpired = value => ({
+  type: localTypes.SET_HAS_EXPIRED,
+  payload: value
 });
 
 // API Calls
@@ -43,13 +48,13 @@ export const loginUserFailure = error => ({
   payload: error
 });
 
-export const logoutUserStart = (history) => ({
+export const logoutUserStart = history => ({
   type: apiTypes.LOGOUT_USER_START,
   history
 });
 
 export const logoutUserSuccess = () => ({
-  type: apiTypes.LOGOUT_USER_SUCCESS,
+  type: apiTypes.LOGOUT_USER_SUCCESS
 });
 
 export const logoutUserFailure = error => ({
@@ -79,7 +84,7 @@ export const updateUserStart = (data, history) => ({
 });
 
 export const updateUserSuccess = () => ({
-  type: apiTypes.UPDATE_USER_SUCCESS,
+  type: apiTypes.UPDATE_USER_SUCCESS
 });
 
 export const updateUserFailure = error => ({
@@ -94,7 +99,7 @@ export const updatePasswordStart = (data, history) => ({
 });
 
 export const updatePasswordSuccess = () => ({
-  type: apiTypes.UPDATE_PASSWORD_SUCCESS,
+  type: apiTypes.UPDATE_PASSWORD_SUCCESS
 });
 
 export const updatePasswordFailure = error => ({
@@ -112,7 +117,7 @@ export const forgotPasswordSuccess = () => ({
   type: apiTypes.FORGOT_PASSWORD_SUCCESS
 });
 
-export const forgotPasswordFailure = (err) => ({
+export const forgotPasswordFailure = err => ({
   type: apiTypes.FORGOT_PASSWORD_FAILURE,
   payload: err
 });

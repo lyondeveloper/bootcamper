@@ -21,3 +21,8 @@ export const selectError = createSelector(
   [selectUserState],
   users => users.error
 );
+
+export const selectHasExpired = createSelector(
+  [selectUserState],
+  users => users.hasExpired
+);

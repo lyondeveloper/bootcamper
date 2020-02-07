@@ -8,8 +8,34 @@ import {
   getBootcampsFailure,
   getBootcampsSuccess,
   getSingleBootcampFailure,
-  getSingleBootcampSuccess
+  getSingleBootcampSuccess,
+  addBootcampFailure,
+  addBootcampSuccess
 } from "./bootcamp.actions";
+
+import { privateRequest } from "../../utils/functions";
+import { toast } from "react-toastify";
+
+export function* addBootcamp({ payload, history }) {
+  try {
+    const { step1, step2 } = payload;
+
+    const data = {
+      ...step1,
+      ...step2
+    };
+
+    yield privateRequest(`/api/v1/bootcamps`, data, "POST");
+
+    yield put(addBootcampSuccess());
+
+    toast.success("Bootcamp created succesfully!");
+
+    debugger;
+  } catch (error) {
+    yield put(addBootcampFailure(error));
+  }
+}
 
 export function* fetchSingleBootcampExecute({ payload: id }) {
   try {
@@ -40,14 +66,25 @@ export function* fetchBootcampsExecute() {
   }
 }
 
+export function* addBootcampListener() {
+  yield takeLatest(apiTypes.ADD_BOOTCAMP_START, addBootcamp);
+}
+
 export function* fetchBootcampsListener() {
   yield takeLatest(apiTypes.GET_BOOTCAMPS_START, fetchBootcampsExecute);
 }
 
 export function* fetchSingleBootcampListener() {
-  yield takeLatest(apiTypes.GET_SINGLE_BOOTCAMP_START, fetchSingleBootcampExecute);
+  yield takeLatest(
+    apiTypes.GET_SINGLE_BOOTCAMP_START,
+    fetchSingleBootcampExecute
+  );
 }
 
 export default function* bootcampSagas() {
-  yield all([call(fetchBootcampsListener), call(fetchSingleBootcampListener)]);
+  yield all([
+    call(fetchBootcampsListener),
+    call(fetchSingleBootcampListener),
+    call(addBootcampListener)
+  ]);
 }

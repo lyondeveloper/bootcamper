@@ -5,7 +5,8 @@ import { userInitialState } from "./users.model";
 const initialState = {
   ...userInitialState,
   currentUser: {},
-  isAuthenticated: false
+  isAuthenticated: false,
+  hasExpired: false
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -26,6 +27,12 @@ export default function usersReducer(state = initialState, action) {
         ...state,
         currentUser: action.payload,
         isAuthenticated: true
+      };
+
+    case localTypes.SET_HAS_EXPIRED:
+      return {
+        ...state,
+        hasExpired: true
       };
 
     case apiTypes.LOGOUT_USER_SUCCESS:

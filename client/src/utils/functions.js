@@ -1,23 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const publicRequest = async (url = '', payload, requestType) => {};
+export const publicRequest = async (url = "", payload, requestType) => {};
 
-export function* privateRequest(url = '', payload, requestType) {
-  const jwtToken = getItemFromLocalStorage('jwtToken');
+export function* privateRequest(url = "", payload, requestType) {
+  const jwtToken = getItemFromLocalStorage("jwtToken");
   const headersConfig = {
     Authorization: `Bearer ${jwtToken}`
   };
   let res;
 
-  if (requestType === 'POST') {
+  if (requestType === "POST") {
     res = yield axios.post(url, payload, {
       headers: headersConfig
     });
-  } else if (requestType === 'PUT') {
+  } else if (requestType === "PUT") {
     res = yield axios.put(url, payload, {
       headers: headersConfig
     });
-  } else if (requestType === 'GET') {
+  } else if (requestType === "GET") {
     res = yield axios.get(url, payload, {
       headers: headersConfig
     });
@@ -34,7 +34,7 @@ export const dynamicFormValidation = (payload, rules) => {
   // validation rules, then returning true or false depending
   // on the result
   keys.forEach(key => {
-    if (payload[key] === '' || payload[key] === 0) {
+    if (payload[key] === "" || payload[key] === 0) {
       rules[key] = false;
       next = false;
     } else {
@@ -53,9 +53,9 @@ export const dynamicFormValidation = (payload, rules) => {
 // requires authentication
 export const setAuthToken = token => {
   if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {
-    axios.defaults.headers.common['Authorization'] = '';
+    axios.defaults.headers.common["Authorization"] = "";
   }
 };
 

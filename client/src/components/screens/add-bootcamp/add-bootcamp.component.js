@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
-import { Col, Row, Container, Card, CardBody, Form, Button } from "reactstrap";
+import { Row, Container, Form, Button } from "reactstrap";
 
 import LocationAndContact from "./location-contact.component";
 import OtherInfo from "./other-info.component";
@@ -24,28 +24,34 @@ import {
 const AddBootcamp = ({
   loading,
   formPayload,
-  submitBootcamp,
+  addBootcamp,
   validationRules,
-  onGlobalChange
+  onGlobalChange,
+  history
 }) => {
-  const isValid = () => {
-    const { next, rules } = dynamicFormValidation(formPayload, validationRules);
+  const isValidStep1 = () => {
+    const { next } = dynamicFormValidation(
+      formPayload.step1,
+      validationRules.step1Rules
+    );
+
+    return next;
+  };
+
+  const isValidStep2 = () => {
+    const { next } = dynamicFormValidation(
+      formPayload.step2,
+      validationRules.step2Rules
+    );
 
     return next;
   };
 
   const handleSubmit = () => {
-    // if (isValid()) {
-    //   do API stuff
-    //   const payload = {
-    //     bootcampId: bootcamp.id,
-    //     data: {
-    //       title: formPayload.title,
-    //       text: formPayload.text,
-    //       rating: formPayload.rating
-    //     }
-    //   };
-    //   addReview(payload, history);
+    // if (isValidStep1() && isValidStep2()) {
+    // do API stuff
+
+    addBootcamp(formPayload, history);
     // }
   };
 
@@ -99,8 +105,8 @@ const mapDispatchToProps = dispatch => ({
   addBootcamp: (payload, history) =>
     dispatch(addBootcampStart(payload, history)),
 
-  onGlobalChange: (module, submodule, payload) =>
-    dispatch(onGlobalChange(module, submodule, payload))
+  onGlobalChange: (module, submodule, property, payload) =>
+    dispatch(onGlobalChange(module, submodule, property, payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddBootcamp);

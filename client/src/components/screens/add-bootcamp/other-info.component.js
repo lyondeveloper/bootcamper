@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import { Col, Row, Container, Card, CardBody, Form, Button } from "reactstrap";
+import { Col, Card, CardBody, ListGroup, FormGroup, Label } from "reactstrap";
 import FormInput from "../../commons/form/input.component";
 
-import { step2Payload } from "../../../redux/bootcamps/bootcamp.model";
+import { step2Payload, layout } from "../../../redux/bootcamps/bootcamp.model";
 
 import produce from "immer";
 
@@ -19,24 +19,46 @@ const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
     housing
   } = state;
 
-  const handleChange = ({ target: { name, value } }) =>
+  const handleChange = ({ target: { name, value } }) => {
     setState({
       ...state,
       [name]: value
     });
-
-  const handleCareers = ({ target: { name, value } }) => {};
-
-  const handleCheck = ({ target: { name, value } }) => {};
+  };
 
   const handleBlur = ({ target: { name, value } }) => {
-    const step2Draffted = produce(step2, draftState => {
-      draftState[name] = value;
-    });
+    const payload = { ...state };
 
-    debugger;
+    onGlobalChange("addBootcamp", "formPayload", "step2", payload);
+  };
 
-    onGlobalChange("addBootcamp", "formPayload", "step2", step2Draffted);
+  // Functions that handles onBlur and checked change in checked input types
+  const handleCheck = ({ target: { name } }) => {
+    setState(
+      produce(draftState => {
+        draftState[name] = !draftState[name];
+      })
+    );
+  };
+
+  // function that handles careers change, IT'S NOT WORKING IDK WHY, SHIT.
+  const handleCareers = career => {
+    // functionality, in click, depending if the career
+    // is in the array, remove it or add it
+
+    // checking if the career is already in the array
+    // if true, remove it
+    const { id, value } = career;
+
+    const careerCopied = Object.assign({}, career);
+
+    const index = careers.findIndex(item => item.id !== careerCopied.id);
+
+    if (index >= 0) {
+      careers.filter(item => item.value !== careerCopied.value);
+    } else {
+      careers.unshift(careerCopied.value);
+    }
   };
 
   return (
@@ -60,7 +82,24 @@ const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
             placeholder="Description (What you offer, etc)"
             className="form-control"
           />
-          <h1>select1</h1>
+
+          {/* <FormGroup>
+            <Label>Careers</Label>
+            <ListGroup>
+              {layout.careers
+                .filter(career => career.id !== 0 && career.id !== 6)
+                .map(career => (
+                  <button
+                    type="button"
+                    className="list-group-item list-group-item-action"
+                    id={career.id}
+                    onClick={() => handleCareers(career)}
+                  >
+                    {career.value}
+                  </button>
+                ))}
+            </ListGroup>
+          </FormGroup> */}
 
           <FormInput
             name="housing"
@@ -72,6 +111,7 @@ const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
             id="housing"
             className="form-control"
             onBlur={handleBlur}
+            checked={housing}
           />
 
           <FormInput
@@ -84,6 +124,7 @@ const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
             id="jobAssistance"
             onBlur={handleBlur}
             className="form-control"
+            checked={jobAssistance}
           />
 
           <FormInput
@@ -96,6 +137,7 @@ const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
             value={jobGuarantee}
             id="jobGuarantee"
             className="form-control"
+            checked={jobGuarantee}
           />
 
           <FormInput
@@ -108,6 +150,7 @@ const OtherInfo = ({ step2, step2Rules, onGlobalChange }) => {
             value={acceptGi}
             id="acceptGi"
             className="form-control"
+            checked={acceptGi}
           />
           <p className="text-muted my-4">
             {" "}

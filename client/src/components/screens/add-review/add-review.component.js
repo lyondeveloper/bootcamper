@@ -11,6 +11,9 @@ import {
   selectError,
   selectLoading
 } from "../../../redux/reviews/reviews.selectors";
+
+import { selectCurrentUser } from "../../../redux/users/users.selectors";
+
 import {
   addReviewStart,
   changeReviewState
@@ -29,7 +32,8 @@ const AddReview = ({
   bootcamp,
   addReview,
   history,
-  changeReviewState
+  changeReviewState,
+  currentUser
 }) => {
   const [state, setState] = useState({ ...initialState });
 
@@ -88,69 +92,76 @@ const AddReview = ({
           <Col md={8} className="m-auto">
             <Card className="bg-white py-2 px-4">
               <CardBody>
-                <Link to={`/bootcamps/${bootcamp.id}/reviews`}>
-                  <Button className="btn-link bg-white text-secondary my-3">
-                    <i className="fas fa-chevron-left" />
-                    <span className="ml-2">Bootcamp Info</span>
-                  </Button>
-                </Link>
-                <h1 className="mb-2"> {bootcamp.name} </h1>
-                <h3 className="text-primary mb-4"> Write a Review </h3>
-                <p>
-                  You must have attented and graduated this bootcamp to review
-                </p>
-                <Form>
-                  <FormInput
-                    name="rating"
-                    type="range"
-                    inputType="range"
-                    labelText="Rating"
-                    valueClassname="text-primary"
-                    id="range"
-                    min="1"
-                    max="10"
-                    step="1"
-                    value={rating}
-                    className="custom-range"
-                    onChange={handleChange}
-                  />
+                {currentUser.role === "publisher" ? (
+                  <h2 className="text-primary"> You can't write a review </h2>
+                ) : (
+                  <>
+                    <Link to={`/bootcamps/${bootcamp.id}/reviews`}>
+                      <Button className="btn-link bg-white text-secondary my-3">
+                        <i className="fas fa-chevron-left" />
+                        <span className="ml-2">Bootcamp Info</span>
+                      </Button>
+                    </Link>
+                    <h1 className="mb-2"> {bootcamp.name} </h1>
+                    <h3 className="text-primary mb-4"> Write a Review </h3>
+                    <p>
+                      You must have attented and graduated this bootcamp to
+                      review
+                    </p>
+                    <Form>
+                      <FormInput
+                        name="rating"
+                        type="range"
+                        inputType="range"
+                        labelText="Rating"
+                        valueClassname="text-primary"
+                        id="range"
+                        min="1"
+                        max="10"
+                        step="1"
+                        value={rating}
+                        className="custom-range"
+                        onChange={handleChange}
+                      />
 
-                  <FormInput
-                    name="title"
-                    labelText="Rating"
-                    inputType="text"
-                    onChange={handleChange}
-                    isValid={validationRules.title}
-                    required
-                    value={title}
-                    id="title"
-                    placeholder="Review Title"
-                    className="form-control"
-                  />
+                      <FormInput
+                        name="title"
+                        labelText="Rating"
+                        inputType="text"
+                        onChange={handleChange}
+                        isValid={validationRules.title}
+                        required
+                        value={title}
+                        id="title"
+                        placeholder="Review Title"
+                        className="form-control"
+                      />
 
-                  <FormInput
-                    name="text"
-                    inputType="textArea"
-                    labelText="Your Review"
-                    rows="10"
-                    onChange={handleChange}
-                    isValid={validationRules.text}
-                    required
-                    value={text}
-                    id="text"
-                    placeholder="Your Review"
-                    className="form-control"
-                  />
+                      <FormInput
+                        name="text"
+                        inputType="textArea"
+                        labelText="Your Review"
+                        rows="10"
+                        onChange={handleChange}
+                        isValid={validationRules.text}
+                        required
+                        value={text}
+                        id="text"
+                        placeholder="Your Review"
+                        className="form-control"
+                      />
 
-                  <Button
-                    type="button"
-                    color="primary"
-                    className="btn-block"
-                    onClick={handleSubmit}
-                  >
-                    Submit Review
-                  </Button>
-                </Form>
+                      <Button
+                        type="button"
+                        color="primary"
+                        className="btn-block"
+                        onClick={handleSubmit}
+                      >
+                        Submit Review
+                      </Button>
+                    </Form>
+                  </>
+                )}
               </CardBody>
             </Card>
           </Col>
@@ -163,7 +174,8 @@ const AddReview = ({
 const mapStateToProps = createStructuredSelector({
   bootcamp: selectSingleBootcamp,
   error: selectError,
-  loading: selectLoading
+  loading: selectLoading,
+  currentUser: selectCurrentUser
 });
 
 const mapDispatchToProps = dispatch => ({

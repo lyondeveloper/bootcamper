@@ -1,16 +1,15 @@
-import React, { Fragment, useEffect } from 'react';
-import BootcampPreview from '../../bootcamp/bootcamp-preview/bootcamp-preview.component';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { withRouter } from 'react-router-dom';
+import React, { Fragment, useEffect } from "react";
+import BootcampPreview from "../../bootcamp/bootcamp-preview/bootcamp-preview.component";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { withRouter } from "react-router-dom";
 
 import {
   selectBootcamps,
   selectLoading
-} from '../../../../redux/bootcamps/bootcamp.selectors';
-import withSpinner from '../../../commons/with-spinner/with-spinner.component';
-import { getBootcampsStart } from '../../../../redux/bootcamps/bootcamp.actions';
-import Spinner from '../../../commons/spinner/spinner.component';
+} from "../../../../redux/bootcamps/bootcamp.selectors";
+import { getBootcampsStart } from "../../../../redux/bootcamps/bootcamp.actions";
+import Spinner from "../../../commons/spinner/spinner.component";
 
 const BootcampsOverview = ({ bootcamps, match, getBootcamps, loading }) => {
   useEffect(() => {
@@ -24,10 +23,10 @@ const BootcampsOverview = ({ bootcamps, match, getBootcamps, loading }) => {
   } else {
     content = (
       <Fragment>
-        {' '}
+        {" "}
         {bootcamps.map(bootcamp => (
-          <BootcampPreview bootcamp={bootcamp} match={match} />
-        ))}{' '}
+          <BootcampPreview id={bootcamp.id} bootcamp={bootcamp} match={match} />
+        ))}{" "}
       </Fragment>
     );
   }

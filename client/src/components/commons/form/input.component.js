@@ -1,6 +1,6 @@
-import React, { Fragment, memo } from 'react';
-import PropTypes from 'prop-types';
-import { Input, FormGroup, FormFeedback, Label } from 'reactstrap';
+import React, { Fragment, memo } from "react";
+import PropTypes from "prop-types";
+import { Input, FormGroup, FormFeedback, Label } from "reactstrap";
 
 const FormInput = ({
   name,
@@ -22,12 +22,13 @@ const FormInput = ({
   rows,
   valueClassname,
   step,
-  maxlength
+  maxlength,
+  checked
 }) => {
   let inputContent;
 
   switch (inputType) {
-    case 'text':
+    case "text":
       inputContent = (
         <Input
           name={name}
@@ -43,35 +44,35 @@ const FormInput = ({
 
       break;
 
-    case 'textArea':
+    case "textArea":
       inputContent = (
-        <textarea
-          name={name}
-          id={id}
-          rows={rows}
-          className={className}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          maxlength={maxlength}
-        />
+        <Fragment>
+          <Label for={name}> {labelText} </Label>
+          <textarea
+            name={name}
+            id={id}
+            rows={rows}
+            className={className}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+            maxlength={maxlength}
+          />
+        </Fragment>
       );
 
       break;
 
-    case 'range':
+    case "range":
       inputContent = (
         <Fragment>
           <Label for={name}>
-            {labelText}: {' '}
-            <span className={valueClassname}>
-              {value}
-            </span>
+            {labelText}: <span className={valueClassname}>{value}</span>
           </Label>
           <Input
             name={name}
-            type='range'
+            type="range"
             className={className}
             min={min}
             max={max}
@@ -85,7 +86,7 @@ const FormInput = ({
 
       break;
 
-    case 'labelText':
+    case "labelText":
       inputContent = (
         <Fragment>
           <Label for={name}>{labelText}</Label>
@@ -104,11 +105,11 @@ const FormInput = ({
 
       break;
 
-    case 'number':
+    case "number":
       inputContent = (
         <Input
           name={name}
-          type='number'
+          type="number"
           min={min}
           max={max ? max : 99}
           className={className}
@@ -122,7 +123,7 @@ const FormInput = ({
 
       break;
 
-    case 'select':
+    case "select":
       inputContent = (
         <Fragment>
           <Label for={name}> {labelText} </Label>
@@ -144,25 +145,29 @@ const FormInput = ({
 
       break;
 
-    case 'check':
+    case "check":
       inputContent = (
         <Fragment>
           <Input
-            type='checkbox'
+            type="checkbox"
             name={name}
             id={id}
             onChange={onChange}
             onBlur={onBlur}
             invalid={required && !isValid}
-            className='form-check-input'
+            className="form-check-input"
+            checked={checked}
           />
-          <Label className='form-check-label' for={name}> {labelText} </Label>
+          <Label className="form-check-label" for={name}>
+            {" "}
+            {labelText}{" "}
+          </Label>
         </Fragment>
       );
 
       break;
 
-    case 'file':
+    case "file":
       inputContent = (
         <Fragment>
           <Label for={name}> {labelText} </Label>
@@ -212,20 +217,20 @@ FormInput.propTypes = {
 };
 
 FormInput.defaultProps = {
-  className: '',
-  type: 'text',
-  inputType: '',
-  placeholder: '',
-  labelText: '',
+  className: "",
+  type: "text",
+  inputType: "",
+  placeholder: "",
+  labelText: "",
   required: false,
   isValid: true,
-  errorText: 'This field is required',
-  rows: '',
-  maxlength: '',
-  step: '',
-  valueClassname: '',
+  errorText: "This field is required",
+  rows: "",
+  maxlength: "",
+  step: "",
+  valueClassname: "",
   options: [],
-  onBlur: () => { }
+  onBlur: () => {}
 };
 
 export default memo(FormInput);
